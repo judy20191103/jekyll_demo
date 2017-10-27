@@ -1,0 +1,56 @@
+window.onload=function(){
+ var btn=docuemnt.getElementById("btn");
+ btn.onclick=function(){
+ var xhr=null;
+ try{
+   xhr=new XMLHttpRequest();
+   }cache(e){
+   xhr=new ActiveXObject("Microsoft.XMLHTTP");
+   }
+   xhr.open("post","post.php",true);
+   xhr.setRequestHeader("content-type","application/x-www-form-urlencoded");
+   xhr.send("username=诗颖&age=22");//post方式，数据存放在send()方法里面作为数据进行传递
+   xhr.onreadystatechange=function(){
+    if(xhr.readyState==4){
+     if(xhr.status==200){
+     alert(
+       alert(xhr.responseText);
+       }
+       else{
+       alert("出错了,Err:'+xhr.status);
+       }
+     }
+  }
+ 
+
+***********************get方式请求服务器****************************************************************
+window.onload=function(){
+  var btn=document.getElementById("btn");
+  btn.onclick=function(){
+  var xhr=null;
+  try{
+     xhr=new XMLHttpRequest();
+     }catch(e){
+     xhr=new ActiveXObject("Microsoft.XMLHTTP");
+     }
+     xhr.open("get","get.php?username="+encodeURI("诗颖“）+”&age=23"+new Date().getTime(),true);
+     xhr.send();
+     xhr.onreadystatechange=function(){
+     if(xhr.readyState==4){
+      if(xhr.status==200){
+        alert(xhr.responseText);
+        }else{
+        alert("出错了,Err"+xhr.status);
+        }
+       }
+      }
+     }
+    }
+    
+    // 缓存 在url后连接一个随机函数作为时间戳，每次请求的地址都不一样，就可以解决缓存
+    // 如果前端传给后端的数据是中文，则会出现乱码，编码encodeURI
+    
+   统一资源标特殊含义的识符，叫做URI,是用来标识互联网上的资源（网页和文件）和怎样访问这些资源的传输协议，如HTTP或者FTP字符串。
+   encodeURI（）该方法不会对ASCII字母和数字进行编码，也不会对这些ASCII标点符号进行编码： - ——.!~*')(
+   该方法的目的是对URI进行完整的编码，因此对以下在URI中具有特殊含义的ASCII标点符号，encodeURI()函数是不会进行转义的：;/?:@&=+$,#
+   如果 URI 组件中含有分隔符，比如 ? 和 #，则应当使用 encodeURIComponent() 方法分别对各组件进行编码。
