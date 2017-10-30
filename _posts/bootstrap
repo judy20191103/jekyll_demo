@@ -1,0 +1,11 @@
+什么是bootstrap？
+ 简洁，直观，强悍的前端开发框架，让web开发更加迅速，简单
+ 来自Twitter,是目前很受欢迎的前端框架之一
+ Bootstrap是基于HTML,CSS,JAVASCRIPT的,让写代码更加容易
+ 移动优先，响应式布局开发
+ 
+ 栅格系统:
+ 容器：container-fluid:流体
+       container:固定 1170px 970px 750px auto
+    ---分为12列：row,col
+    
