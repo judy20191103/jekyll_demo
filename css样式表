@@ -1,0 +1,8 @@
+行间样式表：<div style="..."></div>
+
+内部样式表：针对当前html有效 <style>......</style>
+
+外部样式表：<link href="stylesheet" rel="css1.css"
+html中的link标签是用于当前文档引用外部文档用的，rel属性用于设置对象和链接的目的间的关系。rel是relationship的英文缩写；
+stylesheet中的style是样式的意思，sheet是表格之意，总结起来就是样式表。rel="stylesheet"描述了当前页面与href所指定文档的关系。
+即说明href链接的文档是一个样式表。少了rel="stylesheet" 则样式无法显示。
