@@ -1,0 +1,29 @@
+font-weight:bold/normal 
+font-style:italic 文字倾斜 normal 正常
+font-size:文字大小 24px
+font-family:"楷体"
+font-size>line-height:撑破行高
+line-height==height 文字在一行中垂直居中
+
+多行文字测量行高的方法
+1:确认文字的大小
+2：确认两行文字之间的空隙大小
+3：空隙大小/2，得出来的值就是每行文字的空隙的上下的空隙大小。
+      3.1:当行高为奇数时，那么文字的上方要比下方少一个像素
+      3.2 当行高为偶数时，那么文字上下文空隙一致
+4：通过辅助项测量多行文字的行高
+
+font:font-style | font-weight | font-size
+复合样式需要注意书写顺序
+
+文本设置： 
+    1：color 文字颜色
+    2: text-align 文本对齐方式  left/right/center
+    3：text-indent 首行缩进（em缩进符） 2em
+    4: text-decoration 文本修饰 underline
+    5：letter-spacing 字母间距(不管是中文还是字母） 2px
+    6: word-spacing 单词间距（以空格为解析单位）
+    7：white-space: 强制不换行
+    一个空格的大小：宋体文字下文字大小的一半
+    
+    
