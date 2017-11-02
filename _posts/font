@@ -19,11 +19,24 @@ font:font-style | font-weight | font-size
 文本设置： 
     1：color 文字颜色
     2: text-align 文本对齐方式  left/right/center
-    3：text-indent 首行缩进（em缩进符） 2em
-    4: text-decoration 文本修饰 underline
+    3：text-indent 首行缩进（em缩进符） 2em em是根据字体的大小进行计算的。
+    4: text-decoration 文本修饰 underline/none
     5：letter-spacing 字母间距(不管是中文还是字母） 2px
     6: word-spacing 单词间距（以空格为解析单位）
-    7：white-space: 强制不换行
+    7：white-space: 强制不换行 默认是normal(不换行） nowrap;强制不换行
     一个空格的大小：宋体文字下文字大小的一半
     
-    
+   
+测量文字大小时，最好是使用从上到下的方式去测量文字大小。字体格式不一样时，空格大小也不一样。
+空格的大小：字体格式为宋体时，那么空格大小是当前文字大小的一半。
+  
+  padding:内边距 top/right/bottom/left
+  padding:设置padding 会撑大容器的大小
+  设置一个值时，四个方向都是同一个值 上-》右-》下-》左；两个值时,上下/左右; 三个属性值时：上/左右/下  类似于时钟方向
+  
+  margin:类似于pandding 的设置属性规律
+  margin的问题：1 margin-top传递，一个盒子如果没有上补白（padding-top)和上边框（border-top),那么这个盒子的上边距会和其内部文档流中的第一个子元素的
+  上边距重叠。（亲测，margin-bottom也会出现一样的问题）
+  解决办法：1 修改父元素的高度，给父元素加上padding-top:*px; 2:给父元素添加border 3：为父元素设置：overflow:hidden
+      
+  
