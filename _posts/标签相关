@@ -1,0 +1,50 @@
+header 用于页面的头部信息介绍，也可以用于板块头部，利于浏览器解析，网页语义化，结构化，避免整个页面都是div
+<footer> 页脚，页面的底部或者板块的底部
+<section> 页面上的板块 用于页面上划分不同的区域
+<acticle> 用来在页面中表示一套结构完整而且独立的内容部分
+<aside>元素标签可以包含与当前页面或主要内容相关的引用，侧边栏，广告等
+<time> 用来表示时间
+span 用于区分样式
+
+<h1>标题 logo 在当前页面中最好只有一个
+<h2> <h3> <h4> <h5<> <h6>
+
+<strong>强调粗体
+<em>强调斜体
+<ul>无序 中嵌套li 子li中可以在嵌套ul
+<ol>有序
+
+<dl> (define list的缩写）
+   <dt>自定义列表 title （define title)
+   <dd>自定义列表的列表项 (信息) 
+</dl>
+
+
+标签样式初始化 css reset 原则
+但凡是浏览器的默认衍圣公hi，都不要使用，因为每个浏览器下的标签的默认样式都是不一致的情况
+
+人为的将所有样式全部统一（清除），再根据实际情况（设计稿)进行重新设计
+
+哪些样式是需要重置的？
+   与盒子模型相关的样式： border margin padding
+   标签特有的样式: ul>li ol>li
+   
+   书写原则：
+   用到什么标签就清除所有标签的默认样式
+   建议不要直接将所有标签全部加上（已经写好的所有的css reset模板)
+   不要将所有标签全部统一设置成一致的Reset,需根据标签默认样式特征来分类设置
+    body,h1,h2,h3,h4,h5,h6,p,dl,dd{
+            margin:0;
+        }
+        ul,ol{
+            margin:0;
+            padding:0;
+            list-style:none;
+        }
+        img{
+            border:none;
+            verticle-align:top;
+        }
+        a{
+            text-decoretion:none;
+        }
