@@ -1,0 +1,24 @@
+id选择器用于在页面布局中唯一的那一部份，比如header,footer
+先观察布局，分成哪几个区域
+<div id="top"></div>
+<div id="header"></div>
+<ul id="nav"></ul>
+<div id="content"</div>
+<div id="footer"></div>
+
+
+样式重置：ul{padding:0;margin:0;} li{list-style:none}
+li样式的左边的实心点在不同的浏览器中是大小不一样的，在firefox中和chrome中一样，在ie中细一些；
+所以必须重置，如果真要做实心点可以用图片替代
+
+bpdy,ul,p,h1~h6,dl,dd,form,input,textarea,select{ padding:0; margin:0}
+li{list-style:none;} 
+img{ border:none;}
+a { text-decoration:none;}
+a:hover {text-decoration:underline;}
+原则：用到什么标签就重置什么标签
+
+
+
+
+
