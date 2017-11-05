@@ -8,3 +8,5 @@ background-attachment:scroll;//默认样式，随着滚动条滚动 fixed：固�
 
 background：复合样式 不区分书写样式 一般顺序：颜色 图片 是否重复 位置 滚动条
 background:red url（img/1.jpg) no-repeat center top scroll;
+
+padding： background会填充padding
