@@ -39,4 +39,13 @@ body.ready#wrapper>.lol233
 
 换行符测试自适应高度区域
 
+切图原则:分块切图还是整体切图取决于图片分开切后相加的和是否小于整体切的大小。
+
+javascript:; 是一个伪协议； javascript是表示在触发<a>默认动作时，执行一段javascript代码，而javascript:; 表示什么都不执行，这样
+点击<a>时就没有任何反应。
+href=“javascript:;" 就是去掉a标签的默认行为，跟href="javascript:void(0)"是一样的。 void 是javascript是一个运算符，void(0)就是什么都不做的意思。
+
+
+ps中 ctrl+u 调出色相/饱和度的快捷面板
+ul一般是相对定位，相对于其父级进行定位
 
