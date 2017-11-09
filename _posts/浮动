@@ -1,1 +1,58 @@
-22333
+float: left | right | none | inherit;
+
+文档流是文档中可显示对象在排列时所占用的位置；
+
+浮动的定义：使元素脱离文档流，按照指定方向发生移动，遇到父级边界或者相邻的浮动元素停了下来。
+
+clear: left | right | both | none |inherit; 元素的某个方向上不能有浮动元素
+clear:both; 在左右两侧均不允许浮动元素；
+
+浮动的特征：
+1:块在一排显示
+2:内联支持宽高
+3:默认内容撑开宽度
+4：脱离文档流（父级不设置高度，子级设置浮动后会造成父级塌缩）
+5：提升层级半层
+
+清除浮动的方法：
+1: 父级加高度（扩展性不好）
+2：父级浮动
+问题：页面中所有元素都加浮动，margin左右自动失效（floats bad)
+3: inline-block清除浮动方法
+问题：margin左右auto失效
+4：空标签清浮动。在浮动元素后面添加空标签。
+5: br清除浮动     <br clear="all"/>
+问题：不符合工作中：结构，样式，行为，三者分离的要求
+6: after伪类，清除浮动方法（现在主流方法）
+子级浮动，给父级添加伪类
+.clear:after { content:""; display:block; clear:both; }
+.clear { zoom:1; }
+zoom缩放，
+ <style>
+       .clearfix{
+           zoom: 1;
+       }
+        .clearfix:after{
+            content:"";
+            display: block;
+            clear: both;
+        }
+        .box{
+            border:1px solid red;
+        }
+        .item{
+            width:200px;
+            height:200px;
+            background: red;
+            float:left;
+        }
+    </style>
+</head>
+<body>
+ <div class="box clearfix">
+     <div class="item"></div>
+ </div>
+
+7:给父级添加：overflow:hidden
+
+
