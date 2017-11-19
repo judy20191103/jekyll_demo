@@ -1,0 +1,7 @@
+opacity:0~1; 0:全透明，1：不透明 ---标准浏览器
+filter:alpha(opacity=number) ie6/7 以下
+opacity: 0.5;
+filter:alpha(opacity=50) 0！100 0:全透明 100：不透明
+透明度会继承，子级会继承父级的透明度
+
+z-index:0；默认值，初始值是0
