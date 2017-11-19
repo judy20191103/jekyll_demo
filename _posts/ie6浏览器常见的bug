@@ -1,0 +1,55 @@
+1:h5 标签兼容
+ie6 不识别h5标签
+document.createElement("header")动态地创建地标签称为自定义标签，为内联元素
+document.createElement("section")
+document.createElement("footer")
+
+解决方案：可以引入已经写好地js文件进行兼容性处理
+
+2:元素浮动之后能设置宽度地话就给元素设置宽度，如果需要宽度是内容撑开的，就给里边的块元素加上浮动
+
+
+3：第一块元素浮动，第二块元素加margin值等于第一块元素在IE6下会有间隙的问题
+解决： 不建议这么写； 第二块元素也改成浮动而不是第一块元素是浮动，第二块元素是margin
+
+4：IE6下子元素超出父级宽高，会把父级的宽高撑开（正常浏览器下是子级父级的大小还是按照设置的数据西显示）
+结局方法是：1--不建议这么写 2--不要让子元素的宽高超过父级元素的宽高
+
+5：p包含块元素嵌套规则
+p,td,h1~h6不能再嵌套块级元素，利用chrome下的审查元素可以看出问题
+
+1:margin-top:传递 
+解决方法：促发BFC,hsalayout
+1：给父级元素添加border; 2:overflow:hidden; zoom:1;
+
+2:上下margin叠加的问题:A:正取其大，两小取其小，一正一负相加
+都设置同一方向的marign,比如margin-bottom
+
+当元素浮动后再设置margin-left会产生双倍边距
+解决方法：针对ie6/7 *display:inline;
+
+两个浮动元素中间有注释或者内联元素并且和父级宽度相差不超过3px：ie6下出现注释bug
+解决方法：1：两个浮动元素中间避免出现内联元素或者注释
+         2：当父级宽度相差3px以上
+         
+ie6/7 父级元素的overflow:hidden包不住子级的relative
+解决方法:添加position:relative;
+
+ie6下绝对定位元素父级宽高是奇数，绝对定位元素的right和bottom值会有1px的偏差
+解决方法：避免父级元素宽高出现奇数
+
+ie6下绝对定位元素和浮动元素并列绝对定位元素消失
+
+Ie6下input的空隙
+解决方法：给input加上浮动{ float:left;}
+
+ie6下 输入类型的表单控制背景问题：解决--添加，background-attachment:fixed;
+
+
+
+
+
+
+
+
+
