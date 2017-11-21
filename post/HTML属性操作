@@ -1,0 +1,75 @@
+属性读操作：获取，找到
+元素.属性名
+
+<input type="text" value="点击" id="text1">
+<input type="button" id="btn1"/>
+通过个html的id获取其属性值
+var oBtn=document.getElementById("btn1");
+var oText=document.getElementById("text1");
+oBtn.onclick=function(){
+   alert(oText.value); //输出文本属性的内容
+   alert(oSelect.value);//输出选中的内容
+   }
+
+属性写操作：替换，修改
+属性.属性名=新的值
+
+op.innerHTML=新的值 替换元素内的所有的HTML内容
+innerHtml是标签中的内容
+
+  oBtn.onclick=function () {
+                //添加
+                oDiv.innerHTML+=oSpan.innerHTML+oText.value+'<br/>';
+                oText.value='';
+            }
+  
+  js中不允许出现-
+  font-size==fontSize
+  padding-top==paddingTop
+  
+  class 是js中的保留字
+  当修改的样式较多时，组合到一个class中，点击的时候添加一个className
+    oBtn3.onclick=function () {
+                op.className='red';
+            }
+
+   //IE6 IE7 IE8
+   var oInp=document.getElemntById("inp1");
+   oInp.onclick=function(){
+     oInp.type="checkbox";
+   };
+   
+   /**
+   oDiv.style.styleFloat='left'; IE浏览器
+   oDiv.style.cssFloat='left'; 非IE浏览器
+   */
+   通过改动class名来使它浮动；而避免做兼容性的问题
+   <div class="left"></div> 
+   
+   技术上：必须能做到掌握兼容性问题的解决方法
+   需求上：商量着来（提供最准确的呈现方案）
+   
+  图片的相对路径不能读但是能写
+  var onOff=true; //开关 布尔值：true:1  false:0
+  oImg.onclick=function(){
+     if(onOff){
+     oImg=src='img/3.png';
+     onOff=flase;
+     }
+     else{
+     oImg.src='img/1.png';
+     onOff=true;
+     }
+     
+     
+     
+     
+  
+  
+  
+  
+  
+  
+   
+   
+   
