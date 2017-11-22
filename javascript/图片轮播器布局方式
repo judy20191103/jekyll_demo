@@ -1,0 +1,32 @@
+给父级相对定位：position:relative;
+方便它的子级相对于父级进行绝对定位：position:absolute;
+按钮用a标签实现
+    <a id="prev" href="javascript:;"><</a>
+    <a id="next" href="javascript:;">> </a>
+    
+   
+    用数组存储图片的路径和相应的配图文字:arrUrl[] arrText[]
+          function fnTab() {
+                oSpan.innerHTML=(num+1)+'/'+arrText.length;
+                oImg.src=arrUrl[num];
+                oText.innerHTML=arrText[num];
+            }
+             var num=0;
+          //初始化
+          fnTab();
+
+            oNext.onclick=function () {
+                num++;
+                if(num==arrUrl.length){
+                    num=0;
+                }
+               fnTab();
+            };
+            
+            oPrev.onclick=function () {
+                num--;
+                if(num==-1){//因为当前页面是num=0的时候，num--=-1
+                    num=arrUrl.length-1;
+                }
+                fnTab();
+            };
