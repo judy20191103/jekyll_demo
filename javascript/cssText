@@ -1,0 +1,23 @@
+cssText定义：它是一组样式属性及其值的文本表示。这个文本格式化为一个 CSS 样式表，去掉了包围属性和值的元素选择器的花括号。
+
+cssText 的使用　　　　
+
+obj.cssText = " width:200px;position:absolute;left:100px;";
+正如那篇文章所提cssText会清除之前元素含有的样式，所以得使用
+
+obj.cssText += " width:200px;position:absolute;left:100px;";
+但是在IE中的最后一个分号会被删除
+
+obj.cssText += " ;width:200px;position:absolute;left:100px;";　//这样便能解决在IE中出现的问题了
+
+//使用JSON
+function setStyle(obj,json){
+    for(var i in json)
+    {
+        obj.style[i]=json[i];
+    }
+}
+复制代码
+使用的时候直接
+
+setStyle(obj,{width : '200px'; position : 'absolute'; left : '100px';});
