@@ -1,0 +1,127 @@
+自定义属性：js可以给任何HTML元素添加任意个自定义属性
+
+//背景不能作为判断条件；color;相对路径 也是，以下是错误的例子
+  var aLi=document.getElementsByTagName("li");
+            for(var i=0;i<aLi.length;i++){
+                aLi[i].onclick=function () {
+                    if(this.style.background=="#ccc"){
+                        this.style.background='blue';
+                    }
+                    else{
+                        this.style.background='#ccc';
+                    }
+                }
+            }
+            
+           添加一个快关
+           var onOff=true;//主能控制一组
+           
+             for(var i=0;i<aLi.length;i++){
+             aLi[i].onOff=true;
+                aLi[i].onclick=function () {
+                    if(onOff){
+                        this.style.background='blue';
+                        onOff=false;
+                    }
+                    else{
+                        this.style.background='#ccc';
+                    }
+                }
+                
+           
+           //避免for循环产生的问题，给每个按钮添加一个自定义属性
+           想建立匹配，一一对应的关系，就用索引值
+           var oBtn=document.getElementsByTagName("input");
+              var arr=["鹿鸣","张森","杜鹃"];
+           for(var i=0;i<oBtn.length;i++){
+               oBtn[i].index=i;//自定义属性，索引值
+               oBtn[i].onclick=function () {
+                this.value=arr[this.index];
+                  // alert(this.index);
+               }
+           }
+           
+           例子：
+           <script>
+        window.onload=function () {
+            var oBtn=document.getElementsByTagName("input");
+            var ap=document.getElementsByTagName("p");
+            var arr=["鹿鸣","张森","杜鹃"];
+            for(var i=0;i<oBtn.length;i++){
+                oBtn[i].index=i;
+                oBtn[i].onclick=function () {
+                    // alert(this.index);
+                    this.value=arr[this.index];
+                    ap[this.index].innerHTML=arr[this.index];
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+<input type="button" value="btn1"/>
+<input type="button" value="btn2"/>
+<input type="button" value="btn3"/>
+<p>a</p>
+<p>b</p>
+<p>c</p>
+
+图片切换：//思路：全部清空，当前添加； 清空上个，当前添加
+发现相似的代码（往往功能相同），将其进行代码的修改，往往是修改其下标，但是表示的东西并没有改变，然后将其封装
+成一个函数，进行调用。---优化代码结构
+例子：
+  //初始化，数组配合数字使用
+            var num=0;
+          //  var oldLi=null;
+            for(var i=0;i<arrUrl.length;i++){
+                oUl.innerHTML+='<li></li>';
+            }
+         //   oldLi=oLi[num];
+            oImg.src=arrUrl[num];
+            oSpan.innerHTML=1+num+'/'+arrUrl.length;
+            op.innerHTML=arrText[num];
+            oLi[num].className='active';
+
+            for(var i=0;i<oLi.length;i++){
+                oLi[i].index=i;//索引值
+                oLi[i].onclick=function () {
+                   oImg.src=arrUrl[this.index];
+                   op.innerHTML=arrText[this.index];
+                   oSpan.innerHTML=(1+this.index)+'/'+arrUrl.length;
+                    //思路一：全部清空，当前添加
+                    for(var i=0;i<oLi.length;i++){
+                        oLi[i].className='';
+                    }
+                    this.className="active";
+                    /** 思路二：清空上个，当前添加
+                    oldLi.className="";
+                    oldLi=this;
+                    this.className="active";
+                     */
+                }
+            }
+            经过修改后变成下面的形式:
+                var num=0;
+            for(var i=0;i<arrUrl.length;i++){
+                oUl.innerHTML+='<li></li>';
+            }
+            fnTab();
+            for(var i=0;i<oLi.length;i++){
+                oLi[i].index=i;//索引值
+                oLi[i].onclick=function () {
+                    num=this.index;
+                   fnTab();
+                }
+            }
+            function fnTab() {
+                oImg.src=arrUrl[num];
+                op.innerHTML=arrText[num];
+                oSpan.innerHTML=(1+num)+'/'+arrUrl.length;
+                //思路一：全部清空，当前添加
+                for(var i=0;i<oLi.length;i++){
+                    oLi[i].className='';
+                }
+                //this.className="active";
+                oLi[num].className="active";
+            }
+            
