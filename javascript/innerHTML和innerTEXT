@@ -1,0 +1,23 @@
+<html>  
+    <head><title>innerHTML</title></head>  
+    <body>  
+        <div id="d1"><p id="p1">hello world </p></div>  
+        <script>  
+            var content = document.getElementById("d1");  
+            alert(content.innerHTML);  
+            alert(content.innerText)  
+        </script>  
+    </body>  
+</html>  
+
+
+通过IE浏览器打开，弹出内容为 <p id="p1">hello world </p> 和 hello world
+通过 Firefox 浏览器打开，弹出内容为 <p id="p1">hello world </p> 和 undefined
+通过 chrome 浏览器打开，弹出内容为 <p id="p1">hello world </p> 和 hello world
+
+
+通过上面两个示例，可以看出：
+innerHTML指的是从对象的起始位置到终止位置的全部内容,包括Html标签。
+innerText   指的是从起始位置到终止位置的内容,但它去除Html标签。
+同时，innerHTML 是所有浏览器都支持的，innerText 是IE浏览器和chrome 浏览器支持的，Firefox浏览器不支持。
+其实，innerHTML 是W3C 组织规定的属性；而innerText 属性是IE浏览器自己的属性，不过后来的浏览器部分实现这个属性罢了。
