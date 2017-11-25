@@ -1,0 +1,51 @@
+js中的数据类型：
+1：数字类型 number
+2: 字符串 string
+3: 布尔 boolean
+4: 函数 function
+5: 对象 object （obj,[],{},null)
+6: 未定义 undefined，出现undefined的时候往往表示程序出错了，可能原因是未给存在的变量或者属性初始化
+
+var a1="";
+alert(Number(a1)); //0
+var a2=true;
+alert(Number(a2));// true==1;false==0
+var a3=[1];
+alert(Number(a3));//1
+var a4=['123'];
+alert(Number(a4));// 123
+var a5=[1,2,3];
+alert(Number(a5));//NaN ;也就是数组里面只能放一个数字或者数字字符串，否则出错
+var a6=null;
+alert(Number(a6));//0
+
+Number不能转换json形式的数据
+var json={a:123};
+alert(Number(json));//NaN
+
+var u;
+alert(Number(u));//NaN
+
+var a7=function(){ alert(1);};
+alert(Number(a7));//NaN
+
+parseInt();从左向右一个个找数字，遇到非数字则进行截尾
+ var a="100px";
+           alert(parseInt(a));//100
+           var b="000123px";
+           alert(parseInt(b));//123
+            var c="12.34万元";
+            alert(parseInt(c));//12
+            var d="123.34万元";
+            alert(parseFloat(d));//123.34
+
+           alert(parseInt(a,8));//可以设置进制
+
+使用技巧
+   var num="200.45";
+           if(parseInt(num)==parseFloat(num)){
+               alert(num+'是整数');
+           }
+           else{
+               alert(num+"是小数");
+           }
