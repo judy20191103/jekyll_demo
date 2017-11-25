@@ -1,0 +1,62 @@
+html部分：
+<ul id="list">
+    <li class="lis">
+        <h2>好友</h2>
+        <ul>
+            <li>鹿鸣</li>
+            <li>堂吉诃德</li>
+            <li>桑吉</li>
+            <li>大卫</li>
+            <li>芬奇</li>
+        </ul>
+    </li>
+    <li class="lis">
+        <h2>朋友</h2>
+        <ul>
+            <li>鹿鸣</li>
+            <li>堂吉诃德</li>
+            <li>桑吉</li>
+            <li>大卫</li>
+            <li>芬奇</li>
+        </ul>
+    </li>
+</ul>
+   window.onload=function () {
+            var oUl=document.getElementById("list");
+            var aH2=oUl.getElementsByTagName("h2");
+            var aUl=oUl.getElementsByTagName("ul");
+            var aLi=null;
+            var arrLi=[];// 因为li里面嵌套了ul所以用一个li数组来存储所有被点击的li子项
+
+            for(var i=0;i<aH2.length;i++){
+                aH2[i].index=i;
+                aH2[i].onclick=function () {
+                    //判断条件如果有现成的就直接用，否则创建一个开关
+                    if(this.className==''){
+                        aUl[this.index].style.display='block';
+                        this.className="active";
+                    }
+                  else{
+                        aUl[this.index].style.display='none';
+                        this.className="";
+                    }
+                }
+            }
+              //将所有li都存储到一个数组里面有助于后续对li的操作，遍历方便
+            for(var i=0;i<aUl.length;i++){
+                aLi=aUl[i].getElementsByTagName("li");
+                for(var j=0;j<aLi.length;j++){
+                   arrLi.push(aLi[j]);
+                }
+            }
+            
+            for(var i=0;i<arrLi.length;i++){
+                arrLi[i].onclick=function () {
+
+                    for(var i=0;i<arrLi.length;i++){
+                        arrLi[i].className='';
+                    }
+                    this.className="hover";
+                }
+            }
+        }
