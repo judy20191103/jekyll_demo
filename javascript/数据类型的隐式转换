@@ -1,0 +1,33 @@
+显示类型转换（强制类型转换）:
+Number(); parseInt();parseFloat();
+
+隐式类型转换
++          200+‘3’ 变成字符串
+-*/%       ‘200’-3 变成数字
+++ --      变成数字
+> <        数字的比较||字符串的比较
+!取反      把右边的数据类型转换成布尔值
+
+if（‘10’>9) true  if('10'>'9') false
+
+NaN:not a number 不是个数字的数字
+
+  <script>
+        window.onload=function () {
+            var alnp=document.getElementsByTagName("input");
+            var str="";
+            alnp[1].onclick=function () {
+                str=alnp[0].value;
+                if(isNaN(str)){
+                    alert(str+"不是数字");
+                }
+                else{
+                    alert(str+"是数字");
+                }
+            }
+        };
+    </script>
+</head>
+<body>
+<input type="text" />
+<input type="button" value="输入的是不是数字"/>
