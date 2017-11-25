@@ -21,6 +21,23 @@ html部分：
         </ul>
     </li>
 </ul>
+
+css部分：重置用到的标签的样式，由大到小逐一确定每个标签的样式，对与样式的改变用class方便操作。
+ ul,h2{ padding:0;margin:0; }
+        li { list-style: none;}
+        #list{
+            width:240px;
+            border:1px solid #333;
+            margin:0 auto;
+        }
+        .lis ul{ display:none;}
+        #list .active{ background:url("image/ico2.gif") no-repeat 5px center #FF9;color:#000; }
+        #list h2{ height:30px; line-height:30px; text-indent: 20px;
+            background:url("image/ico1.gif") no-repeat 5px center #6FF; color:#000;}
+        #list ul li { line-height:24px; border-bottom:1px solid #333; text-indent: 24px;}
+        #list li .hover { background: #6FF; }
+        
+        js部分：
    window.onload=function () {
             var oUl=document.getElementById("list");
             var aH2=oUl.getElementsByTagName("h2");
