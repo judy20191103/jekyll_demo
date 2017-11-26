@@ -1,0 +1,25 @@
+作用域
+域：空间，范围，区域
+作用：读，写
+
+浏览器：
+   JS解析器
+   1）找一下些东西： var function参数
+     a=undefined
+     所有的变量，在正式运行代码之前，都提前附了一个值：undefined
+     fn1=function fn1() { alert(2); }
+     所有的函数，在正式运行代码之前，都是整个函数块
+     
+     JS的预解析
+   2) 逐行解读代码：
+      表达式:  = + - * / ++ -- ！ 改变值的操作
+      
+   
+   <scritpt>
+   alert(a);//undefined
+   var a=1;;
+   function fn1(){
+      alert(2);
+      }
+   
+   </script>
