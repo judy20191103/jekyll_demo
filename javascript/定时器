@@ -1,0 +1,75 @@
+定时器:时间概念
+var timer=setInterval(函数，毫秒）;//timer是开的定时器的一个引用
+clearInterval(timer);//清除该引用即关定时器
+for(var i=0;i<10;i++){  //瞬时完成，没有时间概念
+
+}
+
+window.onload=function () {
+            var aBtn=document.getElementsByTagName("input");
+            var arrUrl=['img/1.jpg','img/2.jpg','img/3.jpg','img/4.jpg'];
+            var oBody=document.body;
+            var num=0;
+            var timer=null;
+
+            aBtn[0].onclick=function () {//存在问题，连续点击换背景按钮，会不断开新的定时器，换背景的速度加快
+             //解决问题，开定时器之前先关闭之前的定时器
+             clearInterval(timer);
+               timer=setInterval(function () {
+                   oBody.style.background="url("+arrUrl[num]+")";
+                   num++;
+                   num%=arrUrl.length;
+                },2000)
+            };
+            aBtn[1].onclick=function () {
+              clearInterval(timer);
+            }
+        }
+    </script>
+</head>
+<body>
+<input type="button" value="换背景吧"/>
+<input type="button" value="停止"/>
+
+
+setTimeout(函数，毫秒）;只执行一次
+广告用法
+<script>
+        window.onload=function () {
+            var oimg=document.getElementById("ad");
+            setTimeout(function () {
+                oimg.style.display="inline-block";
+                
+                setTimeout(function () {
+                    oimg.style.display="none";
+                },3000)
+            },2000)
+        }
+    </script>
+    
+    
+    qq头像的实例
+      window.onload=function () {
+            var qq=document.getElementById("qq");
+            var title=document.getElementById("title");
+            var timer=null;
+            qq.onmouseover=show;
+            qq.onmouseout=hide;
+
+            title.onmouseover=show;
+            title.onmouseout=hide;
+            function show() {
+                clearInterval(timer);
+                title.style.display="block";
+            }
+            function hide() {
+                timer=setTimeout(function () {
+                    title.style.display="none";
+                },200)
+            }
+        }
+    </script>
+</head>
+<body>
+<div id="qq"></div>
+<div id="title"></div>
