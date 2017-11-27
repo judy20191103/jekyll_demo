@@ -1,0 +1,42 @@
+    <style>
+        #div1{
+            width:100px;
+            height:100px;
+            background:red;
+            position:absolute;
+            top:50px;
+            left:30px;
+        }
+    </style>
+    <script>
+        window.onload=function () {
+            var obtn=document.getElementById("btn1");
+            var odiv=document.getElementById("div1");
+           // var timer=null;
+            odiv.timer=null;//便于管理timer
+            obtn.onclick=function () {
+                clearInterval(odiv.timer);//null 未定义，不会出现问题
+                odiv.timer=setInterval(function () {
+                    var speed=parseInt(getStyle(odiv,"left"))+10;//10 就是步长
+                    if(speed>800){
+                         speed=800;
+                    }
+                    odiv.style.left=speed+"px";
+                    if(speed==800){
+                        clearInterval(odiv.timer);
+                    }
+                },100)
+            }
+        };
+
+        function getStyle(obj,attr) {
+            return obj.currentStyle?obj.currentStyle:getComputedStyle(obj)[attr];
+        }
+    </script>
+</head>
+<body>
+<input type="button" id="btn1" value="按钮"/>
+<div id="div1"></div>
+</body>
+
+
