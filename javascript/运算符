@@ -1,0 +1,67 @@
+真假问题：数据类型-数字（NaN),字符串，布尔，函数，对象（onject,[],{},null)
+镇: 非0的数字，非空字符串，true,函数，能找到的元素，[],{}
+假： 0，NaN,空字符串，false,不能找到的元素，null,未定义
+
+<script>
+        window.onload=function () {
+            var aInp=document.getElementsByTagName("input");
+            aInp[0].onclick=function () {
+                for(var i=1;i<aInp.length;i++){
+                    aInp[i].checked=!aInp[i].checked;
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+<input type="button" value="反选"/>
+<input type="checkbox" checked/>
+<input type="checkbox"/>
+<input type="checkbox" checked/>
+<input type="checkbox"/>
+<input type="checkbox"/>
+
+！可以进行类型转换
+var a=200;
+!!a ；a=字符串200
+
+例子：
+ <script>
+        window.onload=function () {
+            var ali=document.getElementsByTagName("li");
+            var arr=['red','yellow','blue'];
+            var str='';
+            for(var i=0;i<ali.length;i++){
+                ali[i].index=i;
+                ali[i].style.background=arr[i%arr.length];
+
+                ali[i].onmouseover=function () {
+                    str=this.style.background;
+                    this.style.background="gray";
+                };
+                ali[i].onmouseout=function () {
+                    this.style.background=str;//也可以用arr[i].index来做
+                }
+            }
+        }
+    </script>
+    <style>
+        li{
+            list-style: none;
+            height:24px;
+        }
+    </style>
+</head>
+<body>
+<ul>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+</ul>
