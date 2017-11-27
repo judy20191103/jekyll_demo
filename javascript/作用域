@@ -12,7 +12,7 @@
      
      JS的预解析
    2) 逐行解读代码：
-      表达式:  = + - * / ++ -- ！ 改变值的操作
+      表达式:  = + - * / ++ -- ！ 函数参数；  改变值的操作
       
    
    <scritpt>
@@ -23,3 +23,90 @@
       }
    
    </script>
+
+
+      alert(a); //function a(){ alert(4);}
+        var a=1;
+        alert(a);//1
+        function a() {
+            alert(2);
+        }
+        alert(a);// 1;
+        var a=3;
+        alert(a);//3
+        function a() {
+            alert(4);
+        }
+        alert(a);//3
+        
+        表达式修改预解析的值！！所以a在预解析的过程中最是一个函数，后面被赋值为3
+1: js的预解析过程中：
+遇到同名的，只留一个
+变量和函数重名了，就只留下函数一个
+同名函数后一个覆盖前一个；所以最后留下 function a(){ alert(4);}
+2: 逐行解读代码：
+   表达式
+   函数调用
+   1）预解析：var function 参数
+   2) 逐行解读代码
+  
+  例子1：
+  var a=1;
+  function fn1(){
+  alert(a);//undefined
+  var a=2;
+  }
+  fn1();
+  alert(a);//1
+  
+  例子2
+   var a=1;
+  function fn1(){
+  alert(a);//1  函数里面没有var声明，所以只能沿着作用域链往外找 a=1
+   a=2;//把全局作用域中的a修改了 a=2
+  }
+  fn1();
+  alert(a);//2
+  
+  例子3：
+     var a=1;
+         function fn1(a) {// 参数是 var a 
+             alert(a);//undefined
+             a=2;
+         }
+        fn1();
+        alert(a);//1 因为其在全局作用域中
+
+  
+ 例子4：
+   var a=1;
+         function fn1(a) {  //函数参数是个局部变量；在预解析的的过程中 var a=undefined
+             alert(a);//1   // 所以a=1
+             a=2;//然后修改函数参数变量 a=2； 函数参数a 和 全局变量a 始终是两个独立的不一样的变量
+         }
+        fn1(a);//读代码的过程中，将全局变量a=1 传入
+        alert(a);//1 //输出的是全局变量a
+
+
+ window.onload=function () {
+
+            var aBtn=document.getElementsByTagName("input");
+            for(var i=0;i<aBtn.length;i++){ //因为在这段代码的执行过程中，for循环执行结束后再执行点击事件，i=3
+                aBtn[I].onclick=function () {
+                    alert(i);//3  
+                }
+            }
+        }
+
+    </script>
+</head>
+<body>
+<input type="button" value="1"/>
+<input type="button" value="2"/>
+<input type="button" value="3"/>
+
+
+
+
+
+
