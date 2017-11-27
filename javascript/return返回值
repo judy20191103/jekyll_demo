@@ -1,0 +1,26 @@
+    fn2()(10);//10
+    function fn2() {
+       return function (a) {
+              alert(a);
+           }
+       }
+       
+       
+        fn2(20)(10);//30
+            function fn2(b) {
+                return function (a) {
+                    alert(b+a);
+                }
+            }
+            
+           函数的默认返回值是undefined;
+           return 后面的代码不执行
+           return :返回值
+           1) 函数名+(): fn1()==>return 后面的值
+           2) 所有函数默认返回值:未定义
+           3)return 后面人格代码都执行不了
+           
+           alert(fn());//undefined;
+           function fn() {
+             return ;
+           }
