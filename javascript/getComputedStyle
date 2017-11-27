@@ -1,0 +1,47 @@
+getComputedStyle()获取到的是计算机（浏览器）计算后的样式
+假如有行间样式和css样式，无疑是要经过比较优先级的，这时候就需要getComputedStyle()来进行计算
+
+  <style>
+        div{
+            width: 200px;
+            height: 200px;
+            background:red;
+        }
+    </style>
+    <script>
+        window.onload=function () {
+          var btn=document.getElementById("btn1");
+          var div1=document.getElementById("div1");
+          btn.onclick=function () {
+              //alert(getComputedStyle(div1).width); //IE6 7 8不兼容
+              alert(div1.currentStyle.width); //标准浏览器不兼容
+          }
+        }
+    </script>
+</head>
+<body>
+return返回值
+<div id="div1" style="width:300px;height:200px"></div>
+<input type="button" id="btn1" value="点击"/>
+
+解决办法：
+if($(div1.currentStyle){
+alert(div1.currentStyle.width);
+else{
+alert(getComputedStyle(div1).width);
+}
+
+再进一步思考，封装成一个函数
+function getStyle(obj,attr){
+ return obj.currentStyle?obj.currentStyle[attr]:getComputedStyle(obj)[attr];
+}
+该方法存在的问题：
+background:url() red ...复合样式，不要获取
+backgroundColor: chrome,firefox均为rgb格式，ie为red
+不要获取未设置的样式：不兼容
+
+
+
+
+  
+  
