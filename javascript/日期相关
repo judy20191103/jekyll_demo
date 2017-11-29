@@ -1,0 +1,111 @@
+new Date()；//当前系统的时间对象
+   window.onload=function () {
+           getTime();
+            setInterval(getTime,1000);
+            function getTime() {
+                var myTime=new Date();
+                var year=myTime.getFullYear();
+                var month=myTime.getMonth();
+                var date=myTime.getDate();//是一个月的日期
+                var day=myTime.getDay();
+                var hour=myTime.getHours();
+                var minutes=myTime.getMinutes();
+                var second=myTime.getSeconds();
+                var arrWeek=["星期日","星期一","星期二","星期三","星期四","星期五","星期六"];
+                var str="";
+                str=year+"年"+month+"月"+date+"日"+arrWeek[day]+"    "+toTwo(hour)+":"+toTwo(minutes)+":"+toTwo(second);
+                document.body.innerHTML=str;
+            }
+           function toTwo(n) {
+               return n<10?"0"+n:""+n;
+           }
+        }
+        
+        /*********************************************************/
+        图片时间
+         window.onload=function () {
+            var op=document.getElementById("time");
+            var aImg=document.getElementsByTagName("img");
+            getTime();
+            setInterval(getTime,1000);
+
+            function getTime() {
+                var myTime=new Date();
+                var hour=myTime.getHours();
+                var minutes=myTime.getMinutes();
+                var second=myTime.getSeconds();
+                var str=toTwo(hour)+toTwo(minutes)+toTwo(second);
+                op.innerHTML=str;
+               for(var i=0;i<aImg.length;i++){
+                   aImg[i].src='img/'+str.charAt(i)+'.JPG';
+               }
+            }
+            function toTwo(n) {
+                return n<10?"0"+n:""+n;
+            }
+        }
+/*************************************************************************/
+倒计时的原理：利用未来的时间点和现在的时间点的差值
+现在的时间点（在变）
+未来的时间点（不变） 
+设置未来时间有两种方式：
+1: 数字形式： new Date(2017,11,29,10,21,10)
+2:字符串形式： new Date('June 10,2017 12:12:12');
+
+var iNow=new Date();
+var iNew=new Date(2017,11,29,10,29,30);//注意月份的值是0--11,11就是表示12月
+var t=Math.floor((iNew-iNow)/1000);//得出的是毫秒为单位的数字
+
+转换关系：
+天：Math.floor(t/86400);
+时：Math.floor(t%86400/3600)
+分：Math.floor(t%86400%3600%60)
+秒：t%60;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
