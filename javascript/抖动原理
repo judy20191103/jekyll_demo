@@ -1,0 +1,46 @@
+首先先获取抖频率：
+20,-20,18,-18,16,-16,14,-14,12,-12,10,-10,8,-8,6,-6,4,-4,2,-2,0
+  var arr=[];
+  for(var i=20;i>0;i-=2){
+      arr.push(i,-i);
+  }
+  arr.push(0);
+  alert(arr);
+  
+  抖动案例：
+   <style>
+        img{
+            width:200px;
+            height:300px;
+            position:absolute;//注意左右抖动的时候实际是通过定时器来定时修改left的值，以改变其位置，
+            top:200px;  //所以将其定位为绝对定位，并给其left值设置一个值，getStyle()方法的一个注意点是不获取未初始化的参数
+            left:300px;
+        }
+
+    </style>
+    <script src="jsfunction.js"></script>
+    <script>
+        window.onload=function () {
+            var oImg=document.getElementById("img1");
+
+            oImg.onclick=function () {
+                var pos=parseInt(getStyle(oImg,'left'));
+                var arr=[];
+                var num=0;
+                var timer=null;
+                for(var i=20;i>0;i-=2){
+                    arr.push(i,-i);
+                }
+                arr.push(0);
+
+                clearInterval(timer);
+                timer=setInterval(function () {
+                    oImg.style.left=pos+arr[num]+'px';
+                    num++;
+                    if(num==arr.length){
+                        clearInterval(timer);
+                    }
+                },500)
+            }
+        }
+    </script>
