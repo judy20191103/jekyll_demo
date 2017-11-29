@@ -79,3 +79,73 @@ js部分：
             }
 
         }
+/*******************************************************************/
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #div1{
+            width:100px;
+            height:100px;
+            background:red;
+            position:absolute;
+            top:50px;
+            left:30px;
+        }
+    </style>
+    <script>
+        window.onload=function () {
+            var obtn1 = document.getElementById("btn1");
+            var obtn2 = document.getElementById("btn2");
+            var odiv = document.getElementById("div1");
+
+            obtn2.onclick=function () {
+                doMove(odiv,'top',10,400,function () {
+                    doMove(odiv,'top',-10,40);
+                })
+            };
+            obtn1.onclick=function () {
+                doMove(odiv,'top',-10,40);
+            };
+            function doMove(obj,attr,dir,target,endFn) {
+                clearInterval(obj.timer);//null 未定义，不会出现问题
+                obj.timer = setInterval(function () {
+                    var speed = parseInt(getStyle(obj,attr)) + dir;//10 就是步长
+                    if (speed>target&&dir>0||speed<target&&dir<0) {
+                        speed = target;
+                    }
+                    obj.style[attr] = speed + "px";
+                    if (speed == target) {
+                        clearInterval(obj.timer);
+                        /**
+                         *  if(endFn){
+                            endFn();
+                        }
+                         */
+                       endFn&&endFn();
+                    }
+                }, 50)
+            }
+            function getStyle(obj, attr) {
+                return obj.currentStyle ? obj.currentStyle : getComputedStyle(obj)[attr];
+            }
+
+        }
+    </script>
+</head>
+<body>
+<input type="button" id="btn1" value="往上"/>
+<input type="button" id="btn2" value="往下"/>
+<div id="div1"></div>
+</body>
+</html>
+总结:
+先实现主题功能，再实现第二功能，然后比较两者的异同，保留相同的代码，不同的抽取出来当作参数传入，然后多想想用户希望的功能，回调函数的启发！
+
+
+
+
+
