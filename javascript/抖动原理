@@ -44,3 +44,98 @@
             }
         }
     </script>
+    
+   /****************************************************************************************/
+   抖动函数的封装
+    <script src="jsfunction.js"></script>
+    
+    <script>
+        window.onload=function () {
+            var oImg=document.getElementById("img1");
+
+            oImg.onclick=function () {
+              shake(oImg,'left',function () {
+                  shake(oImg,'top');
+              })
+            };
+
+            function shake(obj,attr,endFn) {
+                var pos=parseInt(getStyle(obj,attr));
+                var arr=[];
+                var num=0;
+                var timer=null;
+
+                for(var i=20;i>0;i-=2){
+                    arr.push(i,-i);
+                }
+                arr.push(0);
+                clearInterval(timer);
+                timer=setInterval(function () {
+                    obj.style[attr]=pos+arr[num]+'px';
+                    num++;
+                    if(num==arr.length){
+                        clearInterval(timer);
+                        endFn&&endFn();
+                    }
+                },100)
+            }
+        }
+    </script>
+   /********************************************************/
+   抖动函数的封装
+   
+     window.onload=function () {
+            var oImg1=document.getElementById("img1");
+            var oImg2=document.getElementById("img2");
+
+            oImg1.onclick=fnShake;
+            oImg2.onclick=fnShake;
+            function fnShake() {
+                var _this=this;//因为函数里的this其实是window
+                shake(_this,'left',function () {
+                    shake(_this,'top');//这里的this指向的是window
+                })
+            }
+
+            function shake(obj,attr,endFn) {
+                var pos=parseInt(getStyle(obj,attr));
+                var arr=[];
+                var num=0;
+                var timer=null;
+
+                for(var i=20;i>0;i-=2){
+                    arr.push(i,-i);
+                }
+                arr.push(0);
+                clearInterval(timer);
+                timer=setInterval(function () {
+                    obj.style[attr]=pos+arr[num]+'px';
+                    num++;
+                    if(num==arr.length){
+                        clearInterval(timer);
+                        endFn&&endFn();
+                    }
+                },100)
+            }
+        }
+   /**************************************************************/
+   抖动函数的隐患，修复
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
