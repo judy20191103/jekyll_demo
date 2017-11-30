@@ -1,0 +1,26 @@
+var str="秒味课堂";
+alert(str.charCodeAt());//22937;
+alert(str.charCodeAt());//21619
+alert(str.charCodeAt());//0~9:48-57  a~z:97-122 A~Z:65-90
+alert(String.fromCharCode(22937,21619));//秒味
+
+加密demo:
+   window.onload=function () {
+            var aInp=document.getElementsByTagName("input");
+            var oDiv=document.getElementById("div1");
+            aInp[1].onclick=function () {
+                var str=aInp[0].value;
+                var str1="";
+                for(var i=0;i<str.length;i++){
+                    str1+=String.fromCharCode(str.charCodeAt(i)-10)
+                }
+                oDiv.innerHTML=str1;
+            }
+        }
+ 
+ indexOf()是从左往右，lastIndexOf()是从右往左
+ var str="www.miaov.com/2017ww';
+ alert(str.indexOf('m');
+ alert(str.indexOf('m',5);找到的是第二个m
+ 找到了就返回字符的位置，找不到就返回-1；
+ 
