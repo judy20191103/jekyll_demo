@@ -1,0 +1,5 @@
+var str="www.miaov.com";
+alert(typeof str.split("."));// object ["www","miaov","con"]
+
+var str4 = '2013-11-29-23-07';
+alert( str4.split('-', 3) );//2013,11,29; 3表示截取前三个
