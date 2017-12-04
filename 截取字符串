@@ -1,0 +1,31 @@
+基于字符串创建新字符串的方法，slice(),substring()和substr(),这三个方法都会返回被操作字符串的一个子字符串，而且也都接受一个或者两个参数，第一个参数指定了
+子字符串开始的位置，第二个参数表示子字符串到哪里结束。
+slice()和substring()的第二个参数指定的是子字符串最后一个字符的位置，而substr()的第二个参数指的是返回的字符的个数。这三个方法都不会修改原字符串本身。
+var str="呦呦鹿鸣，食野之苹";
+alert(str.substring(0,2));//呦呦
+alert(str.substring(2,0));//可以检测两个数，大的往后仍,(0,2)
+alert(str.substring(-3,2));//-3当成0处理
+alert(str.substring(2,-3));//-3和2交换位置，然后当成0处理(0,2)
+
+在传递给这些方法的参数是负值的情况下，行为各不相同。
+slice()方法会将负的第一个参数加上字符串的长度，而将负的第二个参数转换为0，最后,substring()方法会把所有负值参数都转换为0.
+ 
+ var str="呦呦鹿鸣，食野之苹";
+ alert(str.slice(2,0));//什么也不输出，不叫唤位置
+ alert(str.slice(-4,-2));//食野，负数cong后面往前数
+ 
+ var str="hello world";
+ alert(str.slice(3));//lo world
+ alert(str.substring(3));//lo world
+ alert(str.substr(3));//lo world
+ alert(str.slice(3,7));//lo w
+ alert(str.substring(3,7));//lo w
+ alert(str.substr(3,7));//lo worl
+ 
+ alert(str.slice(-3));//rld
+ alert(str.substring(-3));//hello world
+ alert(str.substr(-3));//rld
+ alert(str.slice(3,-4));//lo w
+ alert(str.substring(3,-4));//hel
+ alert(str.substr(3,-4));//""
+
