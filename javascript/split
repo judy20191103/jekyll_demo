@@ -3,3 +3,47 @@ alert(typeof str.split("."));// object ["www","miaov","con"]
 
 var str4 = '2013-11-29-23-07';
 alert( str4.split('-', 3) );//2013,11,29; 3表示截取前三个
+
+/***********************************************一个彩色的高度自适应的方块条纹**/
+html:
+<div id="div1" class="clearfix"></div>
+<input type="text"/>
+<input type="button" value="按钮"/>
+css:
+div{
+      width:300px;
+      border:1px solid #333;         
+      background:#fff;
+      padding: 40px;
+      line-height:40px;
+        }
+        .clearfix{
+            zoom:1;//兼容ie6
+        }
+        .clearfix:after{//清除浮动
+            content: "";
+            display: block;
+            clear:both;
+        }
+        span{
+            display: inline-block;
+            float: left;
+            padding:5px 15px;
+            font-family:"微软雅黑";
+        }
+        
+        window.onload=function () {
+             var oDiv=document.getElementById("div1");
+             var aInp=document.getElementsByTagName("input");
+             var arrColor=["#FFC","#CC3","#6FC","#9C9"];
+
+             aInp[1].onclick=function () {
+                 var str=aInp[0].value;
+                 var arr=str.split("");
+                 for(var i=0;i<arr.length;i++){
+                     arr[i]='<span style="background:'+arrColor[i%arrColor.length]+';">'+arr[i]+'</span>'
+                 }
+                 oDiv.innerHTML+=arr.join('');
+             };
+
+         }  
