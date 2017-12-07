@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #content{
+            width:500px;
+            height:500px;
+            border:1px solid #000;
+            position: relative;
+        }
+        #content div{
+            position:absolute;
+            width:100px;
+            height:100px;
+            background:pink;
+            font-size:30px;
+            line-height:100px;
+            text-align: center;
+        }
+    </style>
+    <script>
+        window.onload=function () {
+            var btn=document.getElementById("btn");
+            var content=document.getElementById("content");
+            var str="";//避免在for循环中多次操作dom，造成网页的回流
+            var l=0;
+            var t=0;
+            var count=0;
+            btn.onclick=function () {
+                var temp=count%4;
+                str="";//利用中间变量还有一个好处，就是每次点击后重新绘制方块图形时可以方便清空页面；
+                switch (temp) {
+                    case 0: //向上    先总结每个方向的方块的left,top的规律，然后再利用点击次数取模求得每个方向，0：上；1：右；2：下：3：左
+                        for(var i=0;i<5;i++){
+                            l = i * 100;
+                            i <= 2 ? t = i * 100 : t = 400 - 100 * i;
+                            str+='<div style="left:'+l+'px;top:'+t+'px">'+i+'</div>';
+                        }
+                        break;
+                    case 1:
+                        //向右
+                        for(var i=0;i<5;i++){
+                            t = i * 100;
+                            i <= 2 ? l = 400 - i * 100 : l = i * 100;
+                            str+='<div style="left:'+l+'px;top:'+t+'px">'+i+'</div>';
+                        }
+                        break;
+                    case 2:
+                        //向下
+                        for(var i=0;i<5;i++){
+                            l = i * 100;
+                            i <= 2 ? t = 400 - i * 100 : t = i * 100;
+                            str+='<div style="left:'+l+'px;top:'+t+'px">'+i+'</div>';
+                        }
+                        break;
+                    case 3:
+                        //向左
+                        for(var i=0;i<5;i++){
+                            t = i * 100;
+                            i <= 2 ? l = i * 100 : l = 400 - i * 100;
+                            str+='<div style="left:'+l+'px;top:'+t+'px">'+i+'</div>';
+                        }
+                        break;
+                    default:break;
+                }
+                content.innerHTML=str;
+                count++;
+            };
+        }
+    </script>
+</head>
+<body>
+<input type="button" value="click" id="btn"/>
+<div id="content">
+    <!--<div style="left:0;top:0;">0</div>
+    <div style="left:100px;top:100px;">1</div>
+    <div style="left:200px;top:200px;">2</div>
+    <div style="left:300px;top:100px">3</div>
+    <div style="left:400px;top:0;">4</div>-->
+</div>
+</body>
+</html>
