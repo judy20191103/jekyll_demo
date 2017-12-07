@@ -1,0 +1,159 @@
+1：点击图片，切换头像
+此处设置一个开关按钮：onOff，用来控制切换图片
+
+2:点击发送按钮，把图片和内容一起发送
+<li><p>文字内容</p></li> 以此为标本，现在html5中设置好了以后，相关的class样式控制好，然后再在js中动态生成。
+
+清除浮动：凡是子级元素用到浮动的地方，都给父级元素去浮动，以免发生潜藏的bug
+.clearfix:after{
+    content:"";
+    display:block;
+    clear:both;
+    visibility: hidden;
+    height:0;
+}
+.clearfix{
+    zoom:1;
+}
+.box{
+    width:236px;
+    height:476px;
+    background:url("img/phone.jpg") no-repeat;
+    margin:0 auto;
+    position:relative;
+}
+.box_cont{
+    width:188px;
+    height:333px;
+    position:absolute;
+    left:25px;
+    top:71px;
+}
+#cont{
+    width:188px;
+    height:294px;
+    border-bottom:1px solid #c7cbca;
+    overflow: auto;
+}
+.more{
+    height:33px;
+    padding-top:5px;
+}
+#people{
+    display:inline-block;
+    width:24px;
+    height:24px;
+    border:1px solid #c7cbca;
+    border-radius: 3px;
+    margin-left:3px;
+    cursor: pointer;
+    float: left;
+}
+#text{
+    width:111px;
+    height:24px;
+    border:1px solid #c7cbca;
+    border-radius: 3px;
+    margin-left:3px;
+    float:left;
+}
+#btn{
+    border:none;
+    background:white;
+    height:24px;
+    font-size:16px;
+    color:#979596;
+    margin-left:3px;
+}
+  .fl p{
+            float:left;
+            background: rebeccapurple;
+        }
+        .fl img{
+            float:left;
+        }
+        .fl p,.fr p{
+            margin:0 0 5px 5px;
+            word-break: break-all;
+            line-height:24px;
+            max-width:140px;
+        }
+        .fr img{
+            float:right;
+        }
+        .fr p{
+            float:right;
+            background: #ffaabd;
+        }
+
+ <script>
+        window.onload=function () {
+            var pic=document.getElementById("pic");
+            var btn=document.getElementById("btn");
+            var text=document.getElementById("text");
+            var cont=document.getElementById("cont");
+            var onOff=true;
+            pic.onclick=function () {
+                if(onOff){
+                    pic.src="img/2.png";//true 切换图片
+                }
+                else{
+                    pic.src="img/1.png";
+                }
+                onOff=!onOff;
+            };
+            btn.onclick = function () {
+                if(onOff){
+                //生成的最新的消息在下方，给每个li去浮动，因为img:float
+                   // cont.innerHTML+='<li class="fl clearfix"><img src="img/1.png"/><p>'+text.value+'</p></li>';
+                   //生成的最新的消息在上方
+                    cont.innerHTML='<li class="fl clearfix"><img src="img/1.png"/><p>'+text.value+'</p></li>'+cont.innerHTML;
+                }
+                else{
+                    //cont.innerHTML+='<li class="fr clearfix"><img src="img/2.png"/><p>'+text.value+'</p></li>';
+                    cont.innerHTML='<li class="fr clearfix"><img src="img/2.png"/><p>'+text.value+'</p></li>'+cont.innerHTML;
+                }
+                text.value="";
+            }
+        }
+    </script>
+</head>
+<body>
+<div class="box">
+    <div class="box_cont">
+        <ul id="cont">
+       <!--  <li class="fl">
+             <img src="img/1.png"/>
+             <p>明月几时有，把酒问青天，不知天上宫阙，今夕是何年</p>
+         </li>
+            <li class="fr">
+                <img src="img/2.png"/>
+                <p>我欲乘风归去，有空琼楼玉宇，高处不胜寒啊，起舞弄清影，何似在人间</p>
+            </li>-->
+           <!-- <li class="fl clearfix ">
+                <img src="img/1.png"/>
+                <p>明月几时有</p>
+            </li>
+            <li class="fr clearfix">
+                <img src="img/2.png"/>
+                <p>把酒问青天</p>
+            </li>-->
+        </ul>
+        <form class="more clearfix">
+            <s id="people">
+                <img src="img/1.png" id="pic">
+            </s>
+            <input type="text" id="text"/>
+            <input type="button" id="btn" value="发送"/>
+        </form>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
