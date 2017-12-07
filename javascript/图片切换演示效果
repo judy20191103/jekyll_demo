@@ -1,0 +1,86 @@
+css: reset.css;重置要用到的h5标签的样式
+     index.css;页面的css样式
+     布局方式：由大到小，从外到里进行布局；父级进行相对定位，子级进行绝对定位
+     
+html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="css/reset.css"/>
+    <link rel="stylesheet" href="css/index.css"/>
+    <script>
+        window.onload=function (){
+            var next=document.getElementById("next");
+            var forward=document.getElementById("forward");
+            var order=document.getElementById("order");
+            var loop=document.getElementById("loop");
+            var pic=document.getElementById("pic");
+            var num=document.getElementById("num");
+            var p=document.getElementById("p");
+            var btnDes=document.getElementById("btnDes");
+            var arr=["image/1a.jpg","image/2.jpg","image/3.jpg","image/4.jpg","image/5.jpg"];
+            var p1=["这是第一张图片","这是第二张图片","这是第三张图片","这是第四张图片","这是第五张图片"];
+            var n=0;
+            var onOff=true;//顺序播放和循环播放时两种不同的播放模式，使用开关来进行切换;onOff=true：表示顺序切换；onOff=false：表示循环切换
+            loop.onclick=function () {
+                onOff=false;
+                btnDes.innerHTML="图片循环播放";
+            };
+            order.onclick=function () {
+              onOff=true;
+              btnDes.innerHTML="图片顺序播放";
+            };
+            next.onclick=function () {
+                n++;
+                if(n>arr.length-1){
+                    if(onOff){
+                        n=arr.length-1;
+                        alert("已经到最后一张了");
+                    }
+                   else{
+                        n=0;
+                    }
+                }
+                change();
+            };
+           forward.onclick=function () {
+             n--;
+             if(n<0){
+                 if(onOff){
+                     n=0;
+                     alert("已经时第一张图片了");
+                 }
+                else{
+                     n=arr.length-1;
+                 }
+             }
+             change();
+           };
+            function change() {
+                //通过n值改变图片的src,p的内容，页码
+                pic.src=arr[n];
+                p.innerHTML=p1[n];
+                num.innerHTML=n+1+"/"+arr.length;
+            }
+        }
+    </script>
+</head>
+<body>
+<div class="box">
+    <form class="btn1">
+        <input type="button" value="顺序播放" id="order"/>
+        <input type="button" value="循环播放" id="loop"/>
+    </form>
+    <p id="btnDes">图片顺序播放</p>
+    <img src="image/1a.jpg" id="pic"/>
+    <p id="num">1/5</p>
+    <form>
+        <input type="button" value="上一张" id="forward"/>
+        <input type="button" value="下一张" id="next"/>
+    </form>
+    <p id="p">这是第一张图片</p>
+</div>
+</body>
+</html>
