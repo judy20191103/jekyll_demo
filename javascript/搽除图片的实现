@@ -1,0 +1,69 @@
+#MyDIV
+{
+transform:translate(20px,20px);//相对于原位置的偏移值
+}
+translate(x):定义转换，只是用x轴的值
+translate(y):定义转换，只是用y轴的值
+#MyDIV
+{
+transform:scale(0.5,2);
+}
+scale(x,y)：定义2D缩放
+scale(x): 通过设置x轴的值来定义缩放转换
+scale(y): 通过设置y轴的值来定义缩放转换
+rotate(angle):定义2D旋转，在参数中规定角度
+rotateX（angle):定义沿着x轴的3D旋转
+rotateY（angle):定义沿着y轴的3D旋转
+rotateZ(angle): 定义沿着Z轴的3D旋转
+skew(x-angle,y-angle):定义沿着X和Y轴的2D倾斜转换
+skewX(angle):定义沿着X轴的2d倾斜转换
+skewY(angle):定义沿着Y轴的2D倾斜转换
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #wrap{
+            width:500px;
+            height:500px;
+            border:1px solid #000;
+            background-image:url("img/1.jpg");
+            background-size:500px 500px;
+            position:absolute;
+        }
+        #wrap div{
+            width:50px;
+            height:50px;
+            background-image:url("img/2.jpg");
+            background-size:50px 50px;
+            position:absolute;
+            transition: 1s;//transition:scale(0);缩放过程是1s
+        }
+    </style>
+    <script>
+        window.onload=function () {
+            var wrap=document.getElementById("wrap");
+            var str="";
+            var l=0;
+            var t=0;
+            for(var i=0;i<100;i++){
+                l=(i%10)*50;//背景图片是500*500，每个方块是50*50，i是个数的序号，l表示其横坐标，t表示其纵坐标
+                t=Math.floor(i/10)*50;
+                str += "<div style='left:"+l+"px;top:"+t+"px;'></div>";
+            }
+            wrap.innerHTML=str;
+            var divs=wrap.getElementsByTagName("div");
+            for(var i=0;i<100;i++){
+                divs[i].onmouseover=function () {
+                    this.style.transform="scale(0)";//将其缩放到0
+                    this.style.opacity=0;//透明度在缩放过程中不断变换
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+<div id="wrap"></div>
+</body>
+</html>
