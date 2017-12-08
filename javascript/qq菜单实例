@@ -59,6 +59,30 @@ css部分：重置用到的标签的样式，由大到小逐一确定每个标�
                     }
                 }
             }
+            /**
+            
+              aH2[i].onclick=function () {
+                    //除了当前被点击的aH2，其余的都应该被关断掉
+                    for(var i=0;i<aH2.length;i++){
+                        if(i!=this.index){
+                            aUl[i].style.display='none';
+                            aH2[i].className="";
+                            aH2[i].onOff=true;
+                        }
+                    }
+                    if(this.onOff){
+                        aUl[this.index].style.display='block';
+                        this.className="active";
+                    }
+                    else{
+                        aUl[this.index].style.display='none';
+                        this.className="";
+                    }
+                    this.onOff=!this.onOff;
+              }  
+            
+            */
+            
               //将所有li都存储到一个数组里面有助于后续对li的操作，遍历方便
             for(var i=0;i<aUl.length;i++){
                 aLi=aUl[i].getElementsByTagName("li");
