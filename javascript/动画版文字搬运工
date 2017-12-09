@@ -1,2 +1,121 @@
 
-//////////////////
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+       #div1,#div2{
+            width:600px;
+            height:150px;
+            border:5px solid #000000;
+            border-radius:10px;
+            position:absolute;
+            left:20px;
+        }
+        #div1{
+            top:20px;
+            background:#FFFFFF;
+        }
+        #div2{
+            top:260px;
+            background: #000000;
+        }
+        #cont{
+            width:590px;
+            height:150px;
+            border:0 solid #000000;
+            position:absolute;
+            top:40px;
+            left:30px;
+        }
+        #btn1,#btn2{
+            width:50px;
+            height:25px;
+            text-align:center;
+            line-height:25px;
+            position:absolute;
+            top:210px;
+            border-radius:5px;
+            cursor:pointer;
+        }
+        #btn1{
+            left:170px;
+            background:gray;
+        }
+        #btn2{
+            background:gainsboro;
+            left:400px;
+        }
+        span{
+            position:absolute;
+            transition:all 2s;
+        }
+    </style>
+</head>
+<body>
+<div id="div1"></div>
+<div id="btn1">↓</div>
+<div id="btn2">↑</div>
+<div id="div2"></div>
+<div id="cont"></div>
+<script>
+    var str="拍碎双玉斗，慷慨一何多。满腔都是血泪，无处着悲歌。三百年来王气，满目山河依旧，" +
+        "人事竟如何？百户尚牛酒，四塞已干戈。千金剑，万言策，两蹉跎。醉中呵壁自语，醒后一滂沱。" +
+        "不恨年华去也，只恐少年心事，强半为销磨。愿替众生病，稽首礼维摩。";
+    var cont=document.getElementById("cont");
+    var btn1=document.getElementById("btn1");
+    var btn2=document.getElementById("btn2");
+    var spans=cont.getElementsByTagName("span");
+    var str1="";//生成的span字符串
+    var num=0;//控制span移动的数字
+    var timer=null;//控制定时器
+    for(var i=0;i<str.length;i++){
+    //给每一个文字加上一个标签并且进行定位
+        str1+='<span style="left:'+i%36*16+'px;top:'+Math.floor(i/36)*30+'px;">'+str.charAt(i)+'</span>';
+    }
+    cont.innerHTML=str1;
+    btn1.onclick=function () {
+     /*   //重置一下数字
+       num=0;
+       //开定时器
+        timer=setInterval(function () {
+            //利用定时器让每一个span运动到下边去
+            spans[num].style.top=Math.floor(num/36)*30+240+"px";//240px的计算根据div1,div2的位置进行计算。
+            //修改文字颜色
+            spans[num].style.color="red";
+            num++;
+            //当运动完成，关闭定时器
+            if(num>spans.length-1){
+                clearInterval(timer);
+            }
+        },30)*/
+     move(240,"red");
+    };
+    btn2.onclick=function () {
+       /* num=0;
+        timer=setInterval(function () {
+            spans[num].style.top=Math.floor(num/36)*30+"px";
+            spans[num].style.color="";
+            num++;
+            if(num>spans.length-1){
+                clearInterval(timer);
+            }
+        },30)*/
+       move(0,"");
+    };
+
+    function move(n,color) {
+        num=0;
+        timer=setInterval(function () {
+            spans[num].style.top=Math.floor(num/36)*30+n+"px";
+            spans[num].style.color=color;
+            num++;
+            if(num>spans.length-1){
+                clearInterval(timer);
+            }
+        },30)
+    }
+</script>
+</body>
+</html>
