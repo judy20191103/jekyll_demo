@@ -71,7 +71,7 @@
     var num=0;//控制span移动的数字
     var timer=null;//控制定时器
     for(var i=0;i<str.length;i++){
-    //给每一个文字加上一个标签并且进行定位
+    //给每一个文字加上一个标签并且进行定位  定位还是计算其横纵坐标；left:"16px;" 是使用双引号，所以进行字符串拼接的时候注意的用单引号
         str1+='<span style="left:'+i%36*16+'px;top:'+Math.floor(i/36)*30+'px;">'+str.charAt(i)+'</span>';
     }
     cont.innerHTML=str1;
