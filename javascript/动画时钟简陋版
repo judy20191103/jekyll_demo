@@ -68,44 +68,46 @@
 
 <script>
     var divs=document.getElementsByTagName("div");
-    var imgs=document.querySelectorAll("li>img");//li标签下直接子元素
-    var timer=null;
-//先让其运行一次，解决其一开始的时钟延迟问题
-     autoPlay();
-     //第三步
-     timer=setInterval(function () {
-         //点的闪烁
-         for(var i=0;i<imgs.length;i++){
-             imgs[i].src="imag/colon1.jpg";
-         }
-         //延时半秒点的闪烁
-         setTimeout(function () {
+    var imgs=document.querySelectorAll("li>img");
+    autoPlay();
+    //第四步
+    setInterval(function () {
+        //第五步：
+        for(var i=0;i<imgs.length;i++){
+            imgs[i].src="imag/colon1.jpg";
+        }
+        //第六步：设置点的闪烁
+        setTimeout(function () {
             for(var i=0;i<imgs.length;i++){
                 imgs[i].src="imag/colon.jpg";
             }
-         },500);
-         autoPlay();
-     },1000);
-     //第一步
-     function autoPlay() {
-         var date=new Date();
-         var h=date.getHours();
-         var m=date.getMinutes();
-         var s=date.getSeconds();
-         var time=toTwo(h)+toTwo(m)+toTwo(s);
-         for(var i=0;i<time.length;i++){
-             slied(i,time);
-         }
-     }
-     //第二步
-    function slied(n,time) {
-        var imgs=divs[n].getElementsByTagName("img");
-        imgs[0].src="imag/"+time[n]+'.JPG';
+        },500);
+        autoPlay();
+    },1000);
+    //第一步
+    function autoPlay() {
+        var date=new Date();
+        var h=date.getHours();
+        var m=date.getMinutes();
+        var s=date.getSeconds();
+        var time=toTwo(h)+toTwo(m)+toTwo(s);
+
+        for(var i=0;i<time.length;i++){
+            slide(i,time);
+        }
     }
-//hh-mm-ss的格式，补0
+    //第三步
+    function slide(n,time) {
+        var imgs=divs[n].getElementsByTagName("img");
+        imgs[0].src="imag/"+time[n]+".JPG";
+    }
+    //第二步
     function toTwo(n) {
         return n<10?"0"+n:""+n;
     }
+
+
+
 </script>
 </body>
 </html>
