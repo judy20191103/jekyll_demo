@@ -50,3 +50,151 @@ javascript由三部分组成
 //			}
 		}
 	}
+	
+ //nextElementSibling 某个元素的下个兄弟子节点
+ //previousElementSibling 某个元素的上个兄弟子节点
+ //
+   var ul=document.getElementById("ul");
+    var lis=ul.children;
+    lis[0].nextElementSibling.style.background="red";
+	
+    ul.firstElementChild.style.background="yellow";//ul的第一个元素子节点 在ie678中不兼容
+    ul.lastElementChild.style.background="blue";//ul的最后一个元素子节点
+    firstChild; 父级标签下的第一个子节点，并不一定是元素子节点
+    
+    总结：以后写js的时候，如果想获取到子元素的element节点，最好使用children方法以及firstChild方法在现代浏览器中使用，
+    都会把元素标签中的空白节点检测出来，一般我们使用这两个方法都是为了获取元素的子元素节点，空白节点会给我们造成很多不必要的bug
+    而children方法则是只检测element元素节点，防范于未然，所以推荐以后是哟个children方法代替childNodes
+    
+    /************************节点例子***********************************/
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+    /*先在css中把修改的样式集中写在class中，修改的时候直接修改类名即可
+        ul{
+            width:200px;
+        }
+        li{
+            color:#666;
+            background:#eee;
+            font-weight:bold;
+            font-size:14px;
+            height:30px;
+            line-height:30px;
+            padding:0 20px;
+            list-style:none;
+
+        }
+        ul .focus{
+            font-size:22px;
+            background:#555;
+            color:#fff;
+        }
+        ul .near{
+            font-size:18px;
+            background:#ccc;
+            color:blue;
+        }
+        ul .none{
+            background:#333;
+            color:#fff;
+        }
+        ul .side{
+            background:orange;
+        }
+
+    </style>
+</head>
+<body>
+<ul id="ul1">
+    <li class="none">这是首行</li>
+    <li>1111</li>
+    <li>2222</li>
+    <li>3333</li>
+    <li>4444</li>
+    <li>5555</li>
+    <li>6666</li>
+    <li>7777</li>
+    <li>8888</li>
+    <li>9999</li>
+    <li>1010</li>
+    <li class="none">这是尾行</li>
+</ul>
+
+<script>
+    var ul=document.getElementById("ul1");
+    var li=ul.children;
+    var first=ul.firstElementChild;
+    var last=ul.lastElementChild;
+
+    for(var i=0;i<li.length;i++){
+     
+        li[i].onmouseover=function () {
+            //第二步
+            if(this==first||this==last){
+                this.className="side";
+            }
+            else{  
+                //第一步
+                this.className="focus";
+                this.previousElementSibling.className=this.nextElementSibling.className="near";
+                first.className=last.className="none";
+                /*this.previousElementSibling.className="near";
+                this.nextElementSibling.className="near";
+                first.className="none";
+                last.className="none";*/
+            }
+        };
+        //第三步
+        li[i].onmouseout=function () {
+            for(var i=0;i<li.length;i++){
+                li[i].className="";
+            }
+            first.className="none";
+            last.className="none";
+        }
+    }
+</script>
+</body>
+</html>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
