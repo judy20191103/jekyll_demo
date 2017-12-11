@@ -8,6 +8,7 @@
             margin:0;
             padding:0;
             height:170px;
+            position:relative;
             overflow: hidden;
         }
         .clearfix:after{
@@ -37,6 +38,7 @@
             vertical-align: top;
         }
     </style>
+
 </head>
 <body>
 <ul class="clearfix">
@@ -68,8 +70,12 @@
 
 <script>
     var divs=document.getElementsByTagName("div");
-    var imgs=document.querySelectorAll("li>img");
-    autoPlay();
+    var imgs=document.querySelectorAll("li>img");//li标签下的直接子标签
+    var old=getTime();
+    //先解决一开始的延时问题
+    for(var i=0;i<old.length;i++){
+        divs[i].getElementsByTagName("img")[0].src="imag/"+old[i]+".JPG";
+    }
     //第四步
     setInterval(function () {
         //第五步：
@@ -85,27 +91,55 @@
         autoPlay();
     },1000);
     //第一步
-    function autoPlay() {
+    function getTime() {
         var date=new Date();
         var h=date.getHours();
         var m=date.getMinutes();
         var s=date.getSeconds();
         var time=toTwo(h)+toTwo(m)+toTwo(s);
-
+        return time;
+    }
+    function autoPlay() {
+        var time=getTime();
         for(var i=0;i<time.length;i++){
-            slide(i,time);
+            if(old[i]!=time[i]){
+                slide(i,time);
+            }
         }
+        old=time;
     }
     //第三步
     function slide(n,time) {
         var imgs=divs[n].getElementsByTagName("img");
-        imgs[0].src="imag/"+time[n]+".JPG";
+        imgs[1].src="imag/"+time[n]+".JPG";
+        move(divs[n],"top",-170,400,function () {
+            imgs[0].src="imag/"+time[n]+".JPG";
+            divs[n].style.top="";
+        })
     }
     //第二步
     function toTwo(n) {
         return n<10?"0"+n:""+n;
     }
 
+    //相当于一个运动框架
+    function move(obj,attr,target,duration,callback) {
+        var b=parseFloat(getComputedStyle(obj)[attr]);
+        var c=target-b;
+        var d=duration;
+        var now=new Date().getTime();
+        var time=null;
+        time=setInterval(function () {
+            var t=new Date().getTime()-now;
+            var value=b+c/d*t;
+            obj.style[attr]=value+"px";
+            if(t>d){
+                clearInterval(time);
+                obj.style[attr]=target+"px";
+                callback&&callback();//当有回调函数的时候才执行
+            }
+        },30)
+    }
 
 
 </script>
