@@ -1,0 +1,52 @@
+回顾javascript的组成
+javascript由三部分组成
+   ECMAscript（javascript核心标准，也是一个解释器）
+   DOM(通过document提供的一些方法或者属性来操作页面)
+   BOM(通过window提供的一些方法或者属性来操作页面)
+   
+   DOM(Document Object Model) 文档对象模型，整个页面文档
+   官方解释：W3C组织推荐的处理可扩展标志语言的标准编程接口，在网页上，组织页面（或者文档）的对象被组织在
+   一个树形结构中，用来表示文档对象的标准模型称为DOM
+   
+   简单点来说：
+       DOM通过document提供一些能够操作页面内容的属性或者方法，赋予开发者操纵页面的能力。
+       
+       按层级划分：父节点，子节点，兄弟节点。
+       父子节点：上下两层节点之间的关系。
+       祖先节点：当前节点上面的所有节点的统称。
+       子孙节点：当前结点下面的所有节点的统称。
+       
+       一般分为三大关系：
+       父级关系：只有一层上下级关系（从当前往上找）
+       子级关系：只有以下一层的关系
+       兄弟关系：同一个父级（同一级）
+       
+       节点的类型：
+       noteType属性返回节点类型的常数值。不同的类型对应不同的常数值，12种类型分别对应1到12的常数值
+       note.noteType; 获取某个元素的
+       元素节点  1
+       属性节点  2
+       文本节点  3
+       注释节点 8
+       childNodes:某数字
+       获取某个节点下的所有子节点
+       nodeValue:获取节点的属性值
+       nodeName:查看节点的属性名
+       
+    //	var lis = ul.childNodes;
+	var lis = ul.children;//lis.length=5
+	/*
+		children:不是标准的属性，但是所有浏览器都支持。
+		找到某个元素下个所有元素子节点。
+	*/
+	
+	console.log(lis.length)
+	
+	document.onclick = function(){
+		for(var i=0;i<lis.length;i++){
+			lis[i].style.width = '150px';
+//			if(lis[i].nodeType === 1){
+//				lis[i].style.width = '150px';
+//			}
+		}
+	}
