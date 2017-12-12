@@ -1,0 +1,69 @@
+分析需求：让一个不确定宽高的元素居中显示
+元素的left=(可视区域宽-元素的宽）/2
+元素的top=(可视区域高-元素的高）/2
+
+可视区的宽/高
+document.documentElement.clientWidth
+document.documentElement.clientHeight
+
+元素的宽/高：
+node.offsetWidth/node.offsetHeight 计算边框
+node.clientWidth/node.clientHeight 不计算边框
+
+
+elem.clientWidth/elem.clientHeight (获取某个元素的宽高）
+注意：不计算边框/加上padding
+
+elem.offsetWidth/elem.offsetHeight （获取某个元素的宽高）
+注意：
+   计算边框
+   加上padding
+   
+ createElement:创建一个元素
+ appendChild：在父元素末尾插入一个元素
+ <ul id="ul">
+    <li>1</li>
+</ul>
+
+<script>
+    var btn=document.getElementById("btn");
+    var ul=document.getElementById("ul");
+    var html="";
+    var num=1;
+    btn.onclick=function () {
+        num++;
+       /* html+='<li>'+num+'</li>';*/
+       var li=document.createElement("li");
+       li.innerHTML=num;
+      /* console.log(li.nodeType);
+        ul.innerHTML=html;*/
+      ul.appendChild(li)
+    }
+    /*****************************************/
+    parentNode.insertBefore(新添加的元素，已有的元素）
+    如果第二个参数为假，那么会将某个元素添加到父元素的末尾
+    
+     btn.onclick=function () {
+        num++;
+       var li=document.createElement("li");
+       li.innerHTML=num;
+       ul.insertBefore(li,ul.children[0]);
+    }
+    
+    父级.removeChild(指定的子节点）
+    注意：如果指定的子节点没有，那么会报错（进行判断解决）
+    
+    父级.replaceChild(新节点（要替换成什么），旧的节点（谁被替换）
+    
+    元素.cloneNode()//克隆某个元素
+    默认就只是克隆元素本身，不会克隆钙元素下的所有子节点，事件是不会被克隆的；
+    cloneNode(有参数，默认为false),如果里面传入为true,那么会克隆该元素下的左右子节点
+    
+    
+    
+    
+    
+    
+    
+    
+    
