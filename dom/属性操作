@@ -1,0 +1,102 @@
+offsetParent: 最近的有定位属性的祖先节点，如果祖先节点都没有定位，那么默认为body
+
+getComputedStyle(div3).left;//20px 得出的结果是带单位的
+div3.offsetLeft; //得出的结果是不带单位的
+
+offsetLeft是一个只读属性，返回当前元素左上角相对于offsetParent节点的左边界偏移的像素值
+left=element.offsetLeft;left是一个整数，表示向左偏移的像素值
+
+offsetTop:上外边框到有定位父级的上内边框的距离
+
+getBoundingClientRect(返回值为一个对象）：
+获取某个元素的信息（高版本：left,top,bottom,right,height),获取的值是会根据滚动条变化的
+
+getBoundingClientRect用于获取某个元素相对于视窗的位置集合，集合中有top,right,bottom,left等属性
+1:语法： 这个方法没有参数
+rectObject=object.getBouundingClientRect();
+2：返回值类型：
+rectObject.top:元素上边到视窗上边的距离（所以才会随着滚动条变化）
+rectObject.right：元素右边到视窗左边的距离;
+rectObject.bottom：元素下边到视窗上边的距离;
+rectObject.left：元素左边到视窗左边的距离;
+
+ var div=document.getElementById("div1");
+    div.setAttribute("index","3");
+    alert(div.getAttribute("index"));
+    div.removeAttribute("index");
+    alert(div.getAttribute("index"));
+/**************************************************************/
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *{
+            margin:0;
+            padding:0;
+        }
+        #div1{
+            background:red;
+            width:100px;
+            height:100px;
+            margin-left:50px;
+            position:relative;
+            border:10px solid #000;
+        }
+        #div2{
+            background: blue;
+            position:relative;
+            width:60px;
+            height:60px;
+            top:20px;
+            left:30px;
+            border:10px solid #000;
+        }
+        #div3{
+            width:30px;
+            height:30px;
+            background:yellow;
+            position:absolute;
+            top:20px;
+            border:1px solid #000;
+            left:0;/*getComputedStyle()方法取得的属性值必须经过初始化，否则无法取到*/
+            transition:1s left;
+        }
+    </style>
+</head>
+<body>
+<input type="button" name="" id="btn" value="点击就走"/>
+<div id="div1">
+    <div id="div2">
+        <div id="div3">
+
+        </div>
+    </div>
+</div>
+
+<script>
+    var div3=document.getElementById("div3");
+    var btn=document.getElementById("btn");
+   /* btn.onclick=function () {
+        var left=0;
+        var elem=div3;
+        var div3B=parseInt(getComputedStyle(div3).borderLeftWidth);
+        console.log(div3B);
+        while(elem){//如果有这个元素就会走循环
+            left+=elem.offsetLeft+parseInt(getComputedStyle(elem).borderLeftWidth);
+            elem=elem.offsetParent;//第一次计算之后，elem就变成了div2
+        }
+        left-=div3B;
+        div3.style.left=-left+'px';
+        console.log(left);
+    }*/
+
+   btn.onclick=function () {
+       div3.style.left=-div3.getBoundingClientRect().left+"px";
+       console.log(div3.getBoundingClientRect().left);
+   }
+</script>
+</body>
+</html>
