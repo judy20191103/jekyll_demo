@@ -1,0 +1,20 @@
+一：属性选择器
+E[attr]只使用属性名，但是没有确定的任何属性值
+E[attr="value"]指定的属性名，并指定了该属性的属性值
+E[attr~="value"]指定属性名，并且具有属性值，此属性值是一个词列表，并且以空格隔开，其中词列表中包含了一个
+value词，而且等号前面的"~"不能不写.
+E[attr^="value"]指定了属性名，并且具有属性值，属性值是以value开头的.
+E[attr$="value"]制订了属性名，并且具有属性值，而且属性值是以value结束的。
+E[attr*="value"]指定了属性名，并且具有属性值，而且属性值中包含了value
+E[attr|="value"]指定了属性名，并且属性值是value或者"vakue-"开头的值(比如说zh-ch)
+
+二：结构性伪类
+E:nth-child(n)  表示E父元素中的第n个字节点：序号从1开始
+p:nth-child(odd){background:red}/*匹配奇数行*/
+p:nth-child(even){background:red}/*匹配偶数行*/
+p:nth-child(2n){background:red}
+E:nth-last-child(n) 表示E父元素中的第n个字节点，从后向前计算
+E:nth-of-type(n)  表示E父元素中的第n个字节点，且类型为E
+E:nth-last-of-type(n)表示E父元素中的第n个字节点，且类型为E,从后向前计算
+E:empty 表示E元素中没有子节点。注意：子节点包含文本节点
+
