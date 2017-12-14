@@ -1,1 +1,81 @@
-123
+一：属性选择器
+E[attr]只使用属性名，但没有确定任何属性值
+E[attr="value"]指定属性名，并指定了该属性的属性值
+E[attr~="value"]指定属性名，并且具有属性值，此属性值是一个词列表，并且以空格隔开，其中词列表中包含了一个value词，而且等号前面的“〜”不能不写
+E[attr^="value"]指定了属性名，并且有属性值，属性值是以value开头的
+E[attr$="value"]指定了属性名，并且有属性值，而且属性值是以value结束的
+E[attr*="value"]指定了属性名，并且有属性值，而且属值中包含了value
+E[attr|="value"]指定了属性名，并且属性值是value或者以“value-”开头的值（比如说zh-cn）
+
+二：结构性选择器
+E:nth-child(n)  表示E父元素中的第n个字节点 //下标从1开始
+p:nth-child(odd){background:red}/*匹配奇数行*/
+p:nth-child(even){background:red}/*匹配偶数行*/
+p:nth-child(2) 找p标签父级下的第二个子元素，并且这个元素还的是p标签，如果不是p标签就不显示
+p:nth-child(2n){background:red};//也就是找2，4，6..的标签并且为p标签，背景才显示红色，如果不是p标签就不显示红色
+E:nth-last-child(n) 表示E父元素中的第n个字节点，从后向前计算；//注意空白文本算第一个..
+E:nth-of-type(n)  表示E父元素中的第n个字节点，且类型为E
+E:nth-last-of-type(n)表示E父元素中的第n个字节点，且类型为E,从后向前计算
+E:empty 表示E元素中没有子节点。注意：子节点包含文本节点
+
+p:nth-child(2) 找p标签父级下的第二个子元素，并且这个元素还的是p标签
+p:nth-of-type(2) 找p标签父级下的第二个p元素
+E:first-child 表示E元素中的第一个子节点
+E:last-child 表示E元素中的最后一个子节点
+E:first-of-type 表示E父元素中的第一个子节点且节点类型是E的
+E:last-of-type 表示E父元素中的最后一个子节点且节点类型是E的
+E:only-child表示E元素中只有一个子节点。注意：子节点不包含文本节点
+E:only-of-type 表示E的父元素中只有一个子节点，且这个唯一的子节点的类型必须是E。注意：子节点不包含文本节点
+
+:first-child==:nth-child(1)
+:last-child==:nth-last-child(1)
+:first-of-type==nth-of-type(1)
+:last-of-type==nth-last-of-type(1)
+
+<p></p>
+<h1>h1</h1>
+<p>p2</p>
+<h1>h2</h1>
+<p><span></span></p>//  p *:only-of-type{ background:yellow;}
+<h1>h3</h1>
+<p>
+    <span></span>
+    <a href="#">链接</a>
+</p>
+<p>p5</p>
+
+/***************************************************************/
+三：伪类
+E:target 表示当前的URL片段的元素类型，这个元素必须是E
+E:disabled 表示不可点击的表单控件
+E:enabled 表示可点击的表单控件
+E:checked 表示已选中的checkbox或radio
+E:first-line 表示E元素中的第一行
+E:first-letter 表示E元素中的第一个字符
+E::selection表示E元素在用户选中文字时
+E::before 生成内容在E元素前
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
