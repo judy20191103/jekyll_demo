@@ -96,13 +96,24 @@ exmaple:
 </body>
 </html>
 
+三：伪类和伪元素
+常见的伪元素：
+E::before 生成内容在E元素前
+E::after 生成内容在E元素后
+E::first-line 表示E元素中的第一行
+E::first-letter 表示E元素中的第一个字符
+
 E:disabled 表示不可点击的表单控件
 E:enabled 表示可点击的表单控件
 E:checked 表示已选中的checkbox或radio
-E:first-line 表示E元素中的第一行
-E:first-letter 表示E元素中的第一个字符
 E::selection表示E元素在用户选中文字时
-E::before 生成内容在E元素前
+E:not(s) 表示E元素不被匹配
+E:hover
+E~F表示E元素毗邻的F元素；//两者之间可以隔着其他标签
+
+四：伪元素和伪类的区别
+
+
 
 
 
