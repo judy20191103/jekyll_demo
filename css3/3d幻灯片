@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+       @-webkit-keyframes show {
+            0%{
+                -webkit-transform:rotateX(180deg);//60deg时页面里面压，-60deg是往页面外面翻转
+                opacity:0
+            }
+            50%{
+                -webkit-transform:rotateX(-30deg);
+                opacity:1;
+            }
+           60%{
+               -webkit-transform:rotateX(20deg);
+               opacity:1;
+           }
+           70%{
+               -webkit-transform:rotateX(-15deg);
+               opacity:1;
+           }
+           80%{
+               -webkit-transform:rotateX(8deg);
+               opacity:1;
+           }
+           90%{
+               -webkit-transform:rotateX(-6deg);
+               opacity:1;
+           }
+           100%{
+               -webkit-transform:rotateX(0deg);
+               opacity:1;
+           }
+        }
+       @-webkit-keyframes hide {
+           0%{
+               -webkit-transform:rotateX(0deg);
+               opacity:1
+           }
+           100%{
+               -webkit-transform:rotateX(-180deg);
+               opacity:0;
+           }
+       }
+        #wrap{
+            width:400px;
+            height:300px;
+            position:relative;
+            margin:40px auto;
+            -webkit-perspective: 800px;
+            -webkit-transform-style:preserve-3d;
+        }
+        img{
+            width:400px;
+            height:300px;
+            position:absolute;
+            left:0;
+            top:0;
+            /*做兼容处理，但是ie浏览器下并没有该翻转淡入淡出的效果*/
+            -webkit-transform-origin:bottom;
+            -moz-transform-origin: bottom;
+            transform-origin: bottom;
+            
+            -webkit-transform:rotateX(-180deg);
+            -moz-transform:rotateX(-180deg);
+            transform: rotateX(-180deg);
+            opacity:0;
+            filter:alpha(opacity:0);
+        }
+        #wrap input{
+            width:60px;
+            height:60px;
+            margin:0;
+            padding:0;
+            background:#ccc;
+            top:100px;
+            position:absolute;
+            border-radius:10px;
+        }
+        #wrap input:nth-of-type(1){
+            left:-100px;
+        }
+        #wrap input:nth-of-type(2){
+            right:-100px;
+        }
+        .show{
+            -webkit-transform:rotateX(0deg);
+            -moz-transform:rotateX(0deg);
+            transform: rotateX(0deg);
+            opacity:1;
+            filter:alpha(opacity:100);
+            -webkit-animation:1s show;
+            -moz-animation:1s show;
+            animation:1s show;
+        }
+       .hide{
+           -webkit-transform:rotateX(180deg);
+           -moz-transform: rotateX(180deg);
+           transform: rotateX(180deg);
+           opacity:0;
+           filter:alpha(opacity:100);
+           -webkit-animation:0.8s hide;
+           -moz-animation:0.8s hide;
+           animation:0.8s hide;
+       }
+    </style>
+</head>
+<body>
+<div id="wrap">
+    <input type="button" value="上一张"/>
+    <img src="img/1.jpg" class="show" />
+    <img src="img/2.jpg"/>
+    <img src="img/3.jpg"/>
+    <img src="img/4.jpg"/>
+    <img src="img/5.jpg"/>
+    <img src="img/6.jpg"/>
+    <input type="button" value="下一张"/>
+</div>
+
+<script>
+    var wrap=document.getElementById("wrap");
+    var aBtn=wrap.getElementsByTagName("input");
+    var aimg=wrap.getElementsByTagName("img");
+    var iNow=0;
+    aBtn[1].onclick=function () {
+        aimg[iNow].className="hide";
+        iNow++;
+        if(iNow>=aimg.length)
+        {
+            iNow=0;
+        }
+        aimg[iNow].className="show";
+    };
+    aBtn[0].onclick=function () {
+        aimg[iNow].className="hide";
+        iNow--;
+        if(iNow<0)
+        {
+            iNow=aimg.length-1;
+        }
+        aimg[iNow].className="show";
+    }
+</script>
+</body>
+</html>
