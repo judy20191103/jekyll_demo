@@ -1,0 +1,164 @@
+transform-style（preserve-3d） 建立3D空间
+Perspective 景深
+Perspective- origin 景深基点：视线从哪个角度看过去
+Transform 新增函数
+rotateX()
+rotateY()
+rotateZ()
+translateZ()
+scaleZ()
+/*************************** example ***************************************/
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .box{
+            width:100px;
+            height:100px;
+            padding:100px;
+            border:5px solid #000;
+            margin:30px auto;
+            -webkit-transform-style:preserve-3d;//设置为3d打印模式
+            -webkit-perspective:50px;//景深，数值大的话就是看物体的距离远，小的近
+        }
+        .div{
+            width:100px;
+            height:100px;
+            background:red;
+            transition:1s;//变化持续时间为1s
+        }
+        .box:hover .div{
+         /*   -webkit-transform: rotate(180deg);*/
+           /* -webkit-transform:rotateY(180deg);*/ rotateZ(180deg):给人的感觉就是正面打转
+           /* -webkit-transform:translateZ(20px);可以在视觉上给人的感觉时放大了
+           */
+        }
+    </style>
+</head>
+<body>
+<div class="box">
+    <div class="div">555</div>
+</div>
+</body>
+</html>
+
+/*******************************************************************************/
+正方体综合案例
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+       .wrap{
+           width:100px;
+           height:100px;
+           padding:100px;
+           border:5px solid #000;
+           margin:100px auto;
+           -webkit-perspective:200px;/* 物体景深，从多远处看物体*/
+           -webkit-transform:scale(2);
+           -webkit-perspective-origin:right center;/*景深基点，从哪个方向看物体*/
+       }
+        .box{
+            width:100px;
+            height:100px;
+            background:red;
+            position:relative;
+            -webkit-transform-style:preserve-3d ;
+            transition:2s;
+            -webkit-transform-origin:center center -50px;
+            /* x y z(-50) 所以就是从该正方体中心旋转的*/
+        }
+        .box div{
+            width:100px;
+            height:100px;
+            line-height:100px;
+            position:absolute;
+            color:#fff;
+            font-size:50px;
+            text-align:center;
+        }
+        .box div:nth-of-type(1){
+            left:0;
+            top:-100px;
+            background:#9C0;
+            -webkit-transform-origin:bottom;
+            -webkit-transform:rotateX(90deg)
+        }
+       .box div:nth-of-type(2){
+           left:-100px;
+           top:0;
+           background:#CF3;
+           -webkit-transform-origin:right;/*该变换基点时相对于该物体所说的*/
+           -webkit-transform:rotateY(-90deg)
+       }
+       .box div:nth-of-type(3){
+           left:0;
+           top:0;
+           background:#CCF;
+       }
+       .box div:nth-of-type(4){
+           left:100px;
+           top:0;
+           background:#0C9;
+           -webkit-transform-origin:left;
+           -webkit-transform:rotateY(90deg)
+       }
+       .box div:nth-of-type(5){
+           left:0;
+           top:100px;
+           background:#69C;
+           -webkit-transform-origin:top;
+           -webkit-transform:rotateX(-90deg)
+       }
+       .box div:nth-of-type(6){
+           left:0;
+           top:0;
+           background:#F0C;
+          /* -webkit-transform-origin:left;
+           -webkit-transform:rotateY(90deg)*/
+           /* translateZ(-100px) 往后退100px,将6反正*/
+           -webkit-transform:translateZ(-100px) rotateX(180deg);
+       }
+        .box:hover{
+            -webkit-transform:rotateX(360deg);
+
+        }
+    </style>
+</head>
+<body>
+<div class="wrap">
+    <div class="box">
+        <div>1</div>
+        <div>2</div>
+        <div>3</div>
+        <div>4</div>
+        <div>5</div>
+        <div>6</div>
+    </div>
+</div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
