@@ -17,6 +17,7 @@ color
     <title>Title</title>
     <style>
         @-webkit-keyframes open {
+        /* 类似图片的抖动原理*/
              0%{
                  -webkit-transform:rotateX(-120deg);
              }
@@ -58,13 +59,13 @@ color
             text-align:center;
         }
         #wrap div{
-            position:absolute;
+            position:absolute;//设置所有div都是绝对定位，方便让其所有子级都根据父元素进行定位
             top:32px;
             left:0;
-            width:100%;
+            width:100%;/*父级的宽度*百分数，如果设置成50%，则它的宽度会越来越小....,如果不设置宽度，div的宽随着span的内容宽度而变换，但是会有限制*/
             -webkit-transform-style:preserve-3d;
             -webkit-transform-origin:top;
-            -webkit-transform:rotateX(-120deg);
+            -webkit-transform:rotateX(-120deg);/* 一开始就让所有div折叠起来*/
         }
         #wrap span{
             display:block;
@@ -78,18 +79,18 @@ color
             transition:1s;
         }
         #wrap>div{
-            top:40px;/*因为h2的高度定为40px*/
+            top:40px;/*因为h2的高度定为40px ，第一个div距离wrap的顶部的距离*/
         }
         #wrap .show{
             -webkit-animation:2s open;
-            -webkit-transform:rotateX(0deg);
+            -webkit-transform:rotateX(0deg);/*打开之后，正面显示折纸*/
         }
         #wrap .hide{
             -webkit-animation:0.8s cloase;
-            -webkit-transform:rotateX(-120deg);
+            -webkit-transform:rotateX(-120deg);/*折叠之后所有div都折叠起来，只能看到-120deg大小的矩形，并且由于z-index低于h2被覆盖掉*/
         }
         #wrap .show>span{
-            box-shadow:inset 0 0 0 20px rgba(0,0,0,0);
+            box-shadow:inset 0 0 0 20px rgba(0,0,0,0);/*在打开的过程中，最下面的span的盒子阴影随着往下打开的折纸而显示出来然后快速消失，span{ transition:1s}*/
         }
         #btn{
             position:absolute;
@@ -127,17 +128,23 @@ color
     var btn=document.getElementById("btn");
     var wrap=document.getElementById("wrap");
     var aDiv=wrap.getElementsByTagName("div");
-    var iDelay=200;
+    var iDelay=200;/*使得在展开的过程中，叠纸打开的速度变缓，给人一种缓缓而至的感觉*/
     var timer=null;
     var i=0;
     var onOff=true;
+    /*第一步*/
+    //if/else的代码其实是反对成的，这其中必然用到一个开关选择器，并且在叠纸打开的过程中要考虑点击按钮的情况，所以要处理一下
+    //有两个方案，1：每次点击前都清除上一次的点击事件，这可以让其在打开的过程中点击-暂停-点击-继续
+    //2：利用是否存在timer作为判断条件，如果存在timer（为真）立即返回，不做任何操作。
     btn.onclick=function () {
       /*  clearInterval(timer);*/
+      //第四步
         if(timer){
             return; //如果定时器已经开启,直接返回，在展开的过程中就不能停止展开，而上面的清空定时器的做法可以
         }
-        if(onOff){
+        if(onOff){ /*第三步*/
             i=0;
+            //第二步
             timer=setInterval(function () {
                 aDiv[i].className="show";
                 i++;
