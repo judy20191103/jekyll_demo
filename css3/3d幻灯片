@@ -30,7 +30,7 @@
                opacity:1;
            }
            100%{
-               -webkit-transform:rotateX(0deg);
+               -webkit-transform:rotateX(0deg); //show变换完成之后刚好时正面对着我们，所以是看得到的，opacity：1(完全不透明）
                opacity:1;
            }
         }
@@ -49,8 +49,8 @@
             height:300px;
             position:relative;
             margin:40px auto;
-            -webkit-perspective: 800px;
-            -webkit-transform-style:preserve-3d;
+            -webkit-perspective: 800px;//景深800px
+            -webkit-transform-style:preserve-3d;//转换模式为3d
         }
         img{
             width:400px;
@@ -145,3 +145,13 @@
 </script>
 </body>
 </html>
+
+总结：
+   思路是通过css的定位，用一个div包住所有img,然后设置两个动画帧，show和hide;两个类名.show,.hide，不仅有动画帧，还应该包括show时img正面显示给
+   我们的角度时0deg,该过程的持续时间以及透明度的变换。
+   给第一张图片设置class="show"，让我们在打开页面的时候就可以看到该效果。
+   最后通过js来操作img的下标来操作图片的显示次序。
+   值得注意的是弄清楚rotateX()的角度的变化方向。
+
+
+
