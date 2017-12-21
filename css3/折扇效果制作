@@ -1,0 +1,139 @@
+js部分
+1:封装函数使每个div进行旋转
+
+2:点击最后一个div将所有div重置到初始位置
+
+3:使用延时计时器调用函数; 实现页面加载完成之后展开的动画
+
+4：点击除了最后一个div以外的其他div
+      --根据点击的div的索引值，让所有div进行旋转，设置点击元素之前和之后的div的旋转偏移值
+      
+/********************************************************************/
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body{
+            margin:8px;
+            background:#666;
+        }
+        #box{
+            width:1200px;
+            height:700px;
+            background:url(img-01/bg.png) no-repeat;
+            position:relative;
+            margin:100px auto;
+        }
+        #box div{
+            width:400px;
+            height:100px;
+            border-radius:9px;
+            position:absolute;
+            left:555px;
+            top:440px;
+            background:url("img-01/logo.png") no-repeat 285px 60px;
+            transform-origin:35px 50px;
+            transition:1s;
+        }
+        #box div:nth-of-type(1){
+            background:#417191;
+        }
+        #box div:nth-of-type(2){
+            background:#ce8298;
+        }
+        #box div:nth-of-type(3){
+            background:#f78992;
+        }
+        #box div:nth-of-type(4){
+            background:#fbc0a5;
+        }
+        #box div:nth-of-type(5){
+            background:#f8988f;
+        }
+        #box div:nth-of-type(6){
+            background:#f16273;
+        }
+        #box div:nth-of-type(7){
+            background:#9c9fcd;
+        }
+        #box div:nth-of-type(8){
+            background:#bae2d3;
+        }
+        #box div:nth-of-type(9){
+            background:#43bab8;
+        }
+        #box div:nth-of-type(10){
+            background:#678d95;
+        }
+    </style>
+</head>
+<body>
+<div id="box">
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+</div>
+<script>
+    var oBox=document.getElementById("box");
+    var divs=oBox.getElementsByTagName("div");
+    var onOff=true;
+    setTimeout(open,300);
+    divs[9].onclick=function () {
+        if(onOff){
+            close();
+        }
+        else{
+            open();
+        }
+        onOff=!onOff;
+    };
+    // 假设点击序号为8的扇叶
+       8（i）   270(目标值，直立) 214(当前值，利用chrom可观察） +56(增量值）
+       7    270             231                         +39(两者的差值是17,其实在open函数中就可以看出老=来)
+       6    270             248                         +22
+       ......由此推到 i*17-56=80-->目标值=当前值+增量值
+    
+    //点击每个扇叶，点中的成90度直立
+    for(var i=0;i<divs.length-1;i++){
+        divs[i].index=i;
+        divs[i].onclick=function () {
+            for(var i=0;i<divs.length;i++){
+                if(i<this.index){                    //这里的17决定的是两个扇叶之间的距离，值越大距离越大
+                    divs[i].style.transform="rotate("+(350-(i*17)+this.index*17-80-10)+"deg)";
+                }
+                if(i>this.index){
+                    divs[i].style.transform="rotate("+(350-(i*17)+this.index*17-80-23)+"deg)";
+                }
+            }
+            divs[this.index].style.transform = "rotate("+(350-(this.index*17)+ this.index*17-80 )+"deg)";
+        }
+
+    }
+
+    //使扇形打开
+    function open() {
+        for(var i=0;i<divs.length;i++){
+            divs[i].style.transform="rotate("+(350-i*17)+"deg)";
+        }
+    }
+    //使扇形合上
+    function close() {
+        for(var i=0;i<divs.length;i++){
+            divs[i].style.transform="rotate(0deg)";
+        }
+    }
+
+
+</script>
+</body>
+</html>
