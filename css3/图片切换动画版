@@ -1,0 +1,104 @@
+1：生成页面中div主体结构
+
+2:封装切换效果的函数
+  根据传入的a的值，每次让第a-1个（上一个）div显示，让第a个（当前）div透明，同时切换第a 个（当前）
+  的背景图片，在50毫秒之后再调用该函数，此时传入a+1（下一个），以此进行下一个div的切换
+  
+3:判断上一个div和下一个div是否存在
+ 如果不存在则不进行递归，避免出错
+ 4:进行函数这个背景图片循环src切换
+ 
+ /*******************************************************************/
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body{
+            margin:0;
+            background:#5e5e5e;
+        }
+        #box{
+            width:857px;
+            height:574px;
+            padding-top:126px;
+            padding-left:143px;
+            background:url(img-03/bg.png) no-repeat;
+            margin:0 auto;
+        }
+        #wrap{
+            width:700px;
+            height:420px;
+            transform-style:preserve-3d;
+            perspective: 800px;
+        }
+        #wrap div{
+            width:10px;
+            height:420px;
+            background:url(img-03/01.png) no-repeat;
+            float:left;
+            transition:0.5s;
+
+        }
+        .clearfix:after{
+            content:"";
+            display:block;
+            height:0;
+            clear:both;
+        }
+        .clearfix{
+            zoom: 1;
+        }
+    </style>
+</head>
+<body>
+<div id="box">
+    <div id="wrap" class="clearfix">
+    </div>
+</div>
+
+<script>
+    var wrap=document.getElementById("wrap");
+    var str="";
+    //1：生成页面中div的主题结构，700/10=70个div
+    for(var i=0;i<70;i++){
+        str+='<div style="background-position-x:'+(-10*i)+'px"></div>'
+    }
+    wrap.innerHTML=str;
+    var divs=wrap.getElementsByTagName("div");
+    var srcNum=2;
+    var num=0;
+    var timer;
+    go();
+    //3:将一张图片的所有div都循环一边，则num最大值为70;srcNum用来计算图片的src
+    //一共6张图片
+    function go() {
+        timer=setInterval(function () {
+            tab(num);
+            num++;
+            if(num==71){
+                clearInterval(timer);
+                srcNum++;
+                if(srcNum==6){
+                    srcNum=1;
+                }
+                num=0;
+                setTimeout(go,500);
+            }
+        },80)
+    }
+    //2:封装前一个切换效果的函数
+    function tab(n) {
+        if(divs[n-1]){
+            divs[n-1].style.opacity=1;
+        }
+        if(divs[n]){
+            divs[n].style.opacity=0;
+            divs[n].style.backgroundImage="url(img-03/0"+srcNum+".png)";
+        }
+    }
+</script>
+</body>
+</html>
+  
