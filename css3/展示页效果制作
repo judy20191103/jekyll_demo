@@ -20,3 +20,133 @@ a) perspective属性设置镜头到元素平面的距离。所有元素都是放
 b) perspective-origin属性规定了镜头在平面上的位置。默认是放在元素的中心。
 
 总结：perspective的意义在于设置远近点大小的比例，让它产生3D感，但是并不改变物体在transform-origin处的大小。
+
+/**************************************************************************************************/
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body{
+            margin:0;
+            background:#999;
+        }
+        #wrap{
+            height:500px;
+            background:url(img-02/bg.png) no-repeat center;
+            background-size:1800px 500px;
+            position:relative;
+            transform-style:preserve-3d;
+            perspective:800px; //设置景深，镜头拉近，才显示处页面的3d效果，有旋转角度，如不设置，看不出角度犹如平面
+            margin-top:100px;
+        }
+        img{
+            border:none;
+            vertical-align:top;//img的css reset
+        }
+        #wrap img{
+            width:300px;
+            height:200px;
+            position:absolute;
+            left:50%;//居中设置
+            top:50%;
+            margin-left:-150px;
+            margin-top:-100px;
+            transition:0.7s ease-in-out; //transition:如何一个html标签的任意一个属性值发挥说呢个变化都会有一个变化时间
+        }
+    </style>
+</head>
+<body>
+<div id="wrap">
+    <img src="img-02/0.png"/>
+    <img src="img-02/1.png"/>
+    <img src="img-02/2.png"/>
+    <img src="img-02/3.png"/>
+    <img src="img-02/4.png"/>
+    <img src="img-02/5.png"/>
+    <img src="img-02/6.png"/>
+</div>
+<script>
+    var imgs=document.getElementsByTagName("img");
+    var now=3;
+    var target;
+    var onOff=true;
+   //tab(3)
+  
+    setTimeout(function () {
+        tab(now);
+    },100);
+
+    for(var i=0;i<imgs.length;i++){
+        imgs[i].index=i;
+        imgs[i].onclick=function () {
+            if(!onOff){ //4，解决多次点击图片的问题， 开关已经打开=true，不能对它进行任何操作，解决多次点击图片错位混乱的问题
+                return;
+            }
+            onOff=false;//开关已经开启
+            target=this.index;
+            //首选方案出的问题，也就是说如何一开始运行的时候我们设置为了goNext()，现在要根据target和now的距离来判断如何运行走
+            //使得我们点击的页面走到最中间的距离是最近的，注意now=0/3/6...设置值进行调试的时候要多考虑极值情况
+            if(target>now){
+               target-now<=3?goNext():goPrev();
+            }
+            else{
+               target+7-now<=3?goNext():goPrev();
+            }
+        }
+    }
+    //3 封装图片的上下切换的问题 ，goNext()和goPrev()的函数的功能其实是一样的，用来切换图片，但是方向不一样，本来想合并成一个函数，
+    //但是其中用到递归，又觉得不方便
+    function goNext() {
+        now++;
+        if(now>6){
+            now=0;
+        }
+        tab(now);
+        if(now==target){ //运动完成
+            onOff=true;//当达成某个条件的时候，把开关复位为true,这相当于用一个开关来监督一个运动过程
+            return;
+        }
+        setTimeout(function () {
+            goNext(); //这里使用了递归
+        },700)
+    }
+    function goPrev() {
+        now--;
+        if(now<0){
+            now=6;
+        }
+        tab(now);
+        if(now==target){ //运动完成
+            onOff=true;
+            return;
+        }
+        setTimeout(function () {
+            goPrev();
+        },700)
+    }
+    //1:封装函数根据传入的n值进行图片切换，就是如何设置整个页面的显示问题，n为中间，left,right分置两边
+    function tab(n) {
+        for(var i=0;i<3;i++){
+            var left=n-1-i;
+            var right=n+1+i;
+            if(left<0){
+                left=left+7;
+            }
+            if(right>6){
+                right=right-7;
+            }
+            //translateZ;值大的显示在最前面，就是离镜头最近，两边的图片的镜头距离对称低于中间
+            imgs[left].style.transform = "translateX("+(-150*(i+1))+"px) translateZ("+(200-i*100)+"px) rotateY(30deg)";
+            imgs[right].style.transform = "translateX("+(150*(i+1))+"px) translateZ("+(200-i*100)+"px) rotateY(-30deg)";
+        }
+        imgs[n].style.transform="translateZ(300px)";
+    }
+     
+</script>
+</body>
+</html>
+
