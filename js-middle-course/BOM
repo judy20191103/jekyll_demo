@@ -1,0 +1,129 @@
+BOM : Browser Object Model 浏览器对象模型
+
+1：open(页面的地址url，打开的方式) 方法 打开一个新的窗口(页面)
+			如果 url 为空，则默认打开一个空白页面
+			如果打开方式为空，默认为新窗口方式打开
+
+		返回值：返回新打开的窗口的 window 对象
+	
+2:close关闭页面
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        window.onload=function () {
+            var aInput=document.getElementsByTagName("input");
+            var opener=null;
+            aInput[0].onclick=function () {
+                //window.open('http://www.baidu.com','_self');
+                opener=window.open();// chrome,firefox和ie都会跳转到新页面中去
+                //alert(opener==window);
+                opener.document.body.style.background="red";
+                //可以根据新窗口返回的引用操作新窗口的属性设置
+            };
+            aInput[1].onclick=function () {
+              window.close();//firefox不能关闭，脚本不得关闭非脚本打开的窗口。
+                //chrome:Bom.html:18 Scripts may close only the windows that were opened by it.
+            };
+            aInput[2].onclick=function () {
+                opener.close();
+            }
+        }
+    </script>
+</head>
+<body>
+<input type="button" value="打开新窗口"/>
+<input type="button" value="关闭窗口"/>
+<input type="button" value="关闭新窗口"/>
+</body>
+</html>
+/****************************************************************************/
+
+window.navigator.userAgent -> 浏览器信息
+window.location : 浏览器地址信息
+//alert(window.location);//http://localhost:63342/js%E4%B8%AD%E7%BA%A7%E8%AF%BE%E7%A8%8B/BOM%E5%
+B1%9E%E6%80%A7.html?_ijt=rmgqs5usbv36mqseask41s09ru//alert(window.location.search);//?_ijt=rmgqs5usbv36mqseask41s09ru
+
+/*****************************************/
+网页可见区域宽： document.body.clientWidth;
+
+网页可见区域高： document.body.clientHeight;
+
+网页可见区域宽： document.body.offsetWidth    (包括边线的宽);
+
+网页可见区域高： document.body.offsetHeight   (包括边线的宽);
+
+网页正文全文宽： document.body.scrollWidth;
+
+网页正文全文高： document.body.scrollHeight;
+
+网页被卷去的高： document.body.scrollTop;
+
+网页被卷去的左： document.body.scrollLeft;
+
+网页正文部分上： window.screenTop;
+
+网页正文部分左： window.screenLeft;
+
+屏幕分辨率的高： window.screen.height;
+
+屏幕分辨率的宽： window.screen.width;
+
+屏幕可用工作区高度： window.screen.availHeight;
+
+屏幕可用工作区宽度：window.screen.availWidth;
+
+scrollHeight: 获取对象的滚动高度。 
+
+scrollLeft:设置或获取位于对象左边界和窗口中目前可见内容的最左端之间的距离
+
+scrollTop:设置或获取位于对象最顶端和窗口中可见内容的最顶端之间的距离
+
+scrollWidth:获取对象的滚动宽度
+
+offsetHeight:获取对象相对于版面或由父坐标 offsetParent 属性指定的父坐标的高度
+
+offsetLeft:获取对象相对于版面或由 offsetParent 属性指定的父坐标的计算左侧位置
+
+offsetTop:获取对象相对于版面或由 offsetTop 属性指定的父坐标的计算顶端位置 
+
+event.clientX 相对文档的水平座标
+
+event.clientY 相对文档的垂直座标
+
+event.offsetX 相对容器的水平坐标
+
+event.offsetY 相对容器的垂直坐标 
+
+document.documentElement.scrollTop 垂直方向滚动的值
+
+event.clientX+document.documentElement.scrollTop 相对文档的水平座标+垂直方向滚动的量
+
+要获取当前页面的滚动条纵坐标位置，用：
+
+document.documentElement.scrollTop;
+
+而不是：
+
+document.body.scrollTop;
+
+documentElement 对应的是 html 标签，而 body 对应的是 body 标签
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
