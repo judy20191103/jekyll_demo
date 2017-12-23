@@ -1,0 +1,191 @@
+oncontextmenu:右键菜单
+阻止默认事件：return false
+
+documentElement 和 body 相关说明：
+body是DOM对象里的body子节点，即 <body> 标签；
+documentElement 是整个节点树的根节点root，即<html> 标签；
+DOM把层次中的每一个对象都称之为节点，就是一个层次结构，你可以理解为一个树形结构，就像我们的目录一样，一个根目录，
+根目录下有子目录，子目录下还有子目录。
+以HTML超文本标记语言为例：整个文档的一个根就是,在DOM中可以使用document.documentElement来访问它，
+它就是整个节点树的根节点。而body是子节点，要访问到body标签，在脚本中应该写：document.body。
+
+网页中获取滚动条卷去部分的高度，可以通过 document.body.scrollTop 来获取，比如使div跟着滚动条滚动：
+运行后没有达到预期效果，输出 document.body.scrollTop 的值一看，一直都是 0。一翻折腾，原来是 DTD 的问题，要是页面直接用 <html> 开头的话就没有问题了。但是要符合 web 标准，DTD 当然是不能少的。
+
+如果有 DTD 时用，那就用 document.documentElement.scrollTop 代替 document.body.scrollTop 就可以了。
+页面具有 DTD，或者说指定了 DOCTYPE 时，使用 document.documentElement。
+
+页面不具有 DTD，或者说没有指定了 DOCTYPE，时，使用 document.body。
+
+在 IE 和 Firefox 中均是如此。
+
+为了兼容，不管有没有 DTD，可以使用如下代码：
+var scrollTop = window.pageYOffset  //用于FF
+                || document.documentElement.scrollTop  
+                || document.body.scrollTop  
+                || 0;
+
+event.clientX 相对文档的水平座标 ; event.clientY 相对文档的垂直座标 ;event.offsetX 相对容器的水平坐标;event.offsetY 相对容器的垂直坐标 
+
+obj.addEventListener(事件行为，事件函数，true/false)//各大主流浏览器均用
+obj.addachEvent(事件行为，事件函数，true/false);已经被取消，
+
+/*
+onkeydown : 当键盘按键按下的时候触发
+onkeyup : 当键盘按键抬起的时候触发
+
+event.keyCode : 数字类型 键盘按键的值 键值
+	ctrlKey,shiftKey,altKey 布尔值
+	当一个事件发生的时候，如果ctrl || shift || alt 是按下的状态，返回true，否则返回false
+*/
+
+/**************************************************************/
+留言本实例
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        window.onload=function () {
+           /* document.onkeydown=function (ev) {
+                var ev=ev||event;
+                alert(ev.keyCode);
+            };*/
+           var oText=document.getElementById("text1");
+           var oUl=document.getElementById("ul1");
+           oText.onkeyup=function (ev) {
+               var ev=ev||event;
+               alert(ev.keyCode);
+               if(this.value!=''){
+                   if(ev.keyCode==13){
+                       var ali=document.createElement("li");
+                       ali.innerHTML=this.value;
+                       if(oUl.children[0]){
+                           oUl.insertBefore(ali,oUl.children[0]);
+                       }
+                       else{
+                            oUl.appendChild(ali);
+                       }
+                   }
+               }
+           }
+        };
+    </script>
+</head>
+<body>
+<input type="text" id="text1"/>
+<ul id="ul1"></ul>
+</body>
+</html>
+
+/****************************************************************************/
+
+键盘控制div移动
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+<style>
+#div1 {width: 100px; height: 100px;  background: red; position: absolute;}
+</style>
+<script>
+window.onload = function() {
+	
+	var oDiv = document.getElementById('div1');
+	
+	//不是所有元素都能够接收键盘事件，能够响应用户输入的元素，能够接收焦点的元素就能够接收键盘事件
+	
+	//onkeydown : 如果按下不抬起，那么会连续触发
+	//定时器
+	document.onkeydown = function(ev) {
+		
+		var ev = ev || event;
+		
+		switch(ev.keyCode) {
+			case 37:
+				oDiv.style.left = oDiv.offsetLeft - 10 + 'px';
+				break;
+			case 38:
+				oDiv.style.top = oDiv.offsetTop - 10 + 'px';
+				break;
+			case 39:
+				oDiv.style.left = oDiv.offsetLeft + 10 + 'px';
+				break;
+			case 40:
+				oDiv.style.top = oDiv.offsetTop + 10 + 'px';
+				break;
+		}
+		
+	}
+	
+}
+</script>
+</head>
+
+<body>
+	<div id="div1"></div>
+</body>
+</html>
+/**************************************************/
+阻止默认行为
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+<script>
+/*
+事件默认行为：当一个事件发生的时候浏览器自己会默认做的事情
+怎么阻止？
+当前这个行为是什么事件触发的，然后在这个事件的处理函数中使用return false;
+*/
+
+document.onkeydown = function() {
+	
+	return false;
+	
+}
+
+//oncontextmenu : 右键菜单事件，当右键菜单（环境菜单）显示出来的时候触发
+
+document.oncontextmenu = function() {
+	
+	//alert(1)
+	
+	return false;
+	
+}
+</script>
+</head>
+
+<body style="height: 2000px;">
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
