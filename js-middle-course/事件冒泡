@@ -1,1 +1,140 @@
+事件冒泡：当一个元素收到事件的时候，会把它收到所有事件传播个它的父级，一直到顶层window.
+
+ <title>Title</title>
+    <style>
+        div{
+            padding:40px;
+        }
+        #div1{
+            background:red;
+        }
+        #div2{
+            background:green;
+        }
+        #div3{
+            background:blue;
+            position:absolute;
+            top:300px;
+        }
+    </style>
+    <script>
+        window.onload=function () {
+            var oDiv1=document.getElementById("div1");
+            var oDiv2=document.getElementById("div2");
+            var oDiv3=document.getElementById("div3");
+            function fn() {
+                alert(this.id);
+            }
+            //事件函数绑定，给**元素加事件，给元素加事件处理函数
+            //告诉div1，如果他接收到了一个点击事件，那么他就去执行fn
+            oDiv1.onclick=fn;
+           /* oDiv2.onclick=fn;中间有断层，也不会阻断事件的传播*/
+            oDiv3.onclick=fn;
+        }
+    </script>
+</head>
+<body>
+<div id="div1">
+    <div id="div2">
+        <div id="div3"></div>
+    </div>
+</div>
+/********************************************************************/
+
+<title>Title</title>
+    <style>
+        #div1 {
+            width:100px;
+            height:200px;
+            border:1px solid red;
+            display:none;
+        }
+    </style>
+    <script>
+        window.onload=function () {
+            var btn = document.getElementById("btn");
+            var oDiv = document.getElementById("div1");
+            btn.onclick = function (ev) {
+                var ev = ev || event;
+                ev.cancelBubble = true;//阻止对当前对象的当前事件的冒泡
+                oDiv.style.display = "block";
+            };
+            document.onclick = function () {
+                /* setTimeout(function () {
+                    oDiv.style.display="none";
+                },1000); 由于事件冒泡的原因，div在鼠标点击按钮事件之后设置为block,
+                在document中又设置为none
+            }*/
+                oDiv.style.display= "none";
+        };
+     }
+    </script>
+</head>
+<body>
+<input type="button" value="按钮" id="btn"/>
+<div id="div1"></div>
+<p>99999999</p>
+<p>88888888</p>
+<p>77777777</p>
+<p>666666666</p>
+
+/********************************************************************/
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #div1{
+            width:100px;
+            height:200px;
+            background:red;
+            position:absolute;
+            left:-100px;
+            top:100px;
+        }
+        #div2{
+            width:30px;
+            height:60px;
+            position:absolute;
+            right:-30px;
+            top:70px;
+            background:black;
+            color:white;
+            text-align:center;
+        }
+    </style>
+    <script>
+        window.onload=function () {
+            var oDiv=document.getElementById("div1");
+            //利用事件冒泡机制，给父级加处理函数，子级的事件也会传到父级的
+            oDiv.onmouseover=function () {
+                this.style.left="0px";
+            };
+            oDiv.onmouseout=function () {
+              this.style.left="-100px";
+            }
+        }
+    </script>
+</head>
+<body>
+<div id="div1">
+    <div id="div2"></div>
+</div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
