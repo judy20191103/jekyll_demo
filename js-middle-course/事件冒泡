@@ -125,7 +125,27 @@
 </body>
 </html>
 
-
+/**********************************************************************************************/
+ window.onload=function () {
+            function fn1() {
+                alert(this);
+            }
+            function fn2() {
+                alert(2);
+            }
+            //给一个对象绑定事件的第一种方式，fn2将会覆盖fn1
+           /* document.onclick=fn1;
+            document.onclick=fn2;*/
+            //给一个对象的同一件事件绑定多个不同的函数
+            //给一个元素绑定事件函数的第二种形式
+           /* document.attachEvent('onclick',function () {
+                fn1.call(document);
+                //document.attachEvent is not a function
+            }); 已经被各大浏览器淘汰了，chrome,ff,ie都不用了*/
+          //  document.attachEvent('onclick',fn2,false);
+           document.addEventListener("click",fn1,false);
+           document.addEventListener("click",fn2,false);
+           /*alert("hahah ");*/
 
 
 
