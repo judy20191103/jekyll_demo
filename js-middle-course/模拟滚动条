@@ -1,0 +1,88 @@
+1：先做出基本模拟滚动条
+2: 给模拟滚动条加上限制条件，上下不能超出其包含区的范围
+3: 模拟滚动条可以控制其他元素的变化
+4：模拟滚动条控制内容区域的显示
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #div1{
+            width:30px;
+            height:500px;
+            background:black;
+            position:absolute;
+            left:10px;
+            top:10px;
+        }
+        #div2{
+            width:30px;
+            height:30px;
+            background:red;
+            position:absolute;
+            left:0;
+            top:0;
+        }
+        #div3{
+            width:500px;
+            height:500px;
+         /*   height:0;*/
+          /*  background:green;*/
+            border:1px solid green;
+            box-sizing: border-box;
+            position:absolute;
+            left:50px;
+            top:10px;
+        }
+        #div4{
+            position:absolute;
+            left:0;
+            top:0;
+        }
+    </style>
+    <script>
+        window.onload=function () {
+            var div1=document.getElementById("div1");
+            var div2=document.getElementById("div2");
+            var div3=document.getElementById("div3");
+            var div4=document.getElementById("div4");
+            var maxTop=div1.offsetHeight-div2.offsetHeight;
+            div2.onmousedown=function (ev) {
+                var ev=ev||event;
+                var disY=ev.clientY-this.offsetTop;
+                document.onmousemove=function (ev) {
+                    var ev=ev||event;
+                    var _top=ev.clientY-disY;
+                    if(_top<0){
+                        _top=0;
+                    }
+                    else if(_top>maxTop){
+                        _top=maxTop;
+                    }
+                    div2.style.top=_top+"px";
+                    var scale=_top/maxTop;//每次移动top的变化尺度，让鼠标移动到最下/上面的时候，内容区也改好在最上面/下面
+                   // div3.style.height=500*scale+"px";
+                    div4.style.top=(div3.clientHeight-div4.clientHeight)*scale+"px";
+                };
+                document.onmouseup=function () {
+                    document.onmousempve=document.onmouseup=null;
+                };
+                return false;
+            }
+        }
+    </script>
+</head>
+<body>
+<div id="div1">
+    <div id="div2"></div>
+    <div id="div3">
+        <div id="div4">
+           文字区域
+        </div>
+    </div>
+</div>
+</body>
+</html>
+
