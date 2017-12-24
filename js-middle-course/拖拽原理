@@ -1,0 +1,71 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #div1{
+            width:100px;
+            height:100px;
+            background:red;
+            position:absolute;
+            left:300px;
+        }
+        #img1{
+            position:absolute;
+        }
+    </style>
+    <script>
+        window.onload=function () {
+            var div1=document.getElementById("div1");
+            var img1=document.getElementById("img1");
+            drag(div1);
+            drag(img1);
+            function drag(obj) {
+                obj.onmousedown=function (ev) {
+                    var ev = ev || event;
+                    var disX = ev.clientX - this.offsetLeft;
+                    var disY = ev.clientY - this.offsetTop;
+
+                    /* if (obj.setCapture) {
+                     obj.setCapture();浏览器已经完善，不存在该函数；Uncaught TypeError: aInput[0].setCapture is not a function
+                     }*/
+                    document.onmousemove = function (ev) {
+                        var ev = ev || event;
+                        var Left=ev.clientX - disX;
+                        var Top=ev.clientY - disY;
+                        if(Left<100){//有磁性吸附的效果
+                            Left=0;
+                        }
+                        else if(Left>document.documentElement.clientWidth-obj.offsetWidth){
+                            Left=document.documentElement.clientWidth-obj.offsetWidth+"px";
+                        }
+                        if(Top<100){//有磁性吸附的效果
+                            Top=0;
+                        }
+                        else if(Top>document.documentElement.clientHeight-obj.offsetHeight){
+                            Top=document.documentElement.clientHeight-obj.offsetHeight+"px";
+                        }
+                        obj.style.left=Left+"px";
+                        obj.style.top=Top+"px";
+                    };
+                    document.onmouseup = function () {
+                        document.onmousemove = document.onmouseup = null;
+                         /*if (obj.releaseCapture) {
+                         obj.releaseCapture();
+                         }*/
+                        return false;
+                    };
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+<div id="div1"></div>
+<img src="2.jpg" id="img1"/>
+</body>
+</html>
