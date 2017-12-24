@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #div1{
+            width:100px;
+            height:100px;
+            background:red;
+            position:absolute;
+            z-index:2;
+        }
+        #img1{
+            position:absolute;
+            left:500px;
+            top:200px;
+        }
+        img{
+            width:200px;
+            height:200px;
+        }
+    </style>
+    <script>
+        window.onload=function () {
+            var div1=document.getElementById("div1");
+            var img1=document.getElementById("img1");
+            drag(div1);
+            function drag(obj) {
+                obj.onmousedown = function (ev) {
+                    var ev = ev || event;
+                    var disX = ev.clientX - this.offsetLeft;
+                    var disY = ev.clientY - this.offsetTop;
+
+                    document.onmousemove = function (ev) {
+                        var ev = ev || event;
+                        var L = ev.clientX - disX;
+                        var T = ev.clientY - disY;
+                        var L1 = L;
+                        var R1 = L + obj.offsetWidth;
+                        var T1 = T;
+                        var B1 = T + obj.offsetHeight;
+
+                        var L2 = img1.offsetLeft;
+                        var R2 = L2 + img1.offsetWidth;
+                        var T2 = img1.offsetTop;
+                        var B2 = T2 + img1.offsetHeight;
+                        //上下左右四个方向检测有没有碰到边界
+                        if (R1 < L2 || L1 > R2 || B1 < T2 || T1 > B2) {
+                            img1.src = "1.jpg";
+                        }
+                        else {//否则就是碰到边界
+                            img1.src = "2.jpg";
+                        }
+                        obj.style.left = L + "px";
+                        obj.style.top = T + "px";
+                    };
+                    //把onmouseup写在onmousedown函数里面整个就是一个完整的执行流程，不然会出现狗皮膏药的问题
+                    document.onmouseup = function () {
+                        document.onmousemove = document.onmouseup = null;
+                        if (obj.releaseCapture) {
+                            obj.releaseCapture();
+                        }
+
+                        return false;
+                    }
+                }
+            }
+
+
+        }
+    </script>
+</head>
+<body>
+<div id="div1"></div>
+<img src="1.jpg" id="img1"/>
+</body>
+</html>
