@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #div1{
+            width:100px;
+            height:100px;
+            background:red;
+            position:absolute;
+            left:500px;
+            top:200px;
+        }
+    </style>
+    <script>
+        window.onload=function () {
+            var div1=document.getElementById('div1');
+            div1.onmousedown=function (ev) {
+                var ev=ev||event;
+                var disW=this.offsetWidth;
+                var disX=ev.clientX;
+                var disL=this.offsetLeft;
+
+                var b='';
+                if(disX>disL+disW-10){ //判断是在左边还是右边拖拽
+                    b='right';
+                }
+                if(disX<disL+10){
+                    b='left';
+                }
+                document.onmousemove=function (ev) {
+                    var ev=ev||event;
+                    switch(b){
+                        case 'right'://右边拖拽只需要改变宽度值
+                            div1.style.width=disW+(ev.clientX-disX)+"px";
+                            break;
+                        case 'left':
+                        //在左边拖拽，要同时改变其宽度和left值
+                            div1.style.width=disW-(ev.clientX-disX)+"px";
+                            div1.style.left=disL+(ev.clientX-disX)+"px";
+                            break;
+                    }
+                };
+                document.onmouseup=function () {
+                  document.onmousemove=document.onmouseup=null;
+                };
+                return false;
+            }
+        }
+    </script>
+</head>
+<body>
+<div id="div1"></div>
+</body>
+</html>
