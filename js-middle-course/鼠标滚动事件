@@ -1,1 +1,67 @@
-addEventListener()和removeEventListener(). 所有DOM节点都包含这两种方法, 并且他们都接受3个参数: 要处理的石建明、作为事件处理程序的函数和一个布尔值. 最后这个布尔值如果是true, 表示在捕获阶段调用事件处理程序; 如果是false, 表示在冒泡阶段调用事件处理程序. 比如:
+addEventListener()和removeEventListener(). 所有DOM节点都包含这两种方法, 并且他们都接受3个参数: 要处理的石建明、
+作为事件处理程序的函数和一个布尔值. 最后这个布尔值如果是true, 表示在捕获阶段调用事件处理程序; 如果是false, 表示在冒泡阶段调用事件处理程序. 比如:
+
+ie/chrome:onmousewheel
+  event.wheelDelta
+  上：120
+  下：-120
+firefox:DOMMouseScroll 必须用addEventListener
+ event.detail
+  上：-3
+  下：3
+ return false阻止的是 obj.on事件名称=fn 所触发的默认行为
+ addEventListener绑定的事件需要通过event下面的preventDefault();
+ 
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #div1{
+            width:100px;
+            height:100px;
+            background:red;
+        }
+    </style>
+    <script>
+        window.onload=function () {
+            var div1=document.getElementById("div1");
+            div1.onmousewheel=fn;
+
+            if (div1.addEventListener) {
+                div1.addEventListener('DOMMouseScroll', fn, false);
+            }
+            function fn(ev) {
+//                alert(1);
+                var ev=ev||event;
+               // alert(ev.wheelDelta);//ie, chrome向前120，向后-120
+               // alert(ev.detail);//firefox 向前滚动-3，向后滚动3
+                var b=true;//true 表示向前滚动，false表示向后滚动，借助一个变量来做兼容
+                if(ev.wheelDelta){
+                    b=ev.wheelDelta>0?true:false;
+                }
+                else{
+                    b=ev.detail<0?true:false;
+                }
+                if(b){
+                    this.style.height=this.offsetHeight-10+"px";
+                }
+                else{
+                    this.style.height=this.offsetHeight+10+"px";
+                }
+              /*  if(ev.preventDefault){
+                    ev.preventDefault();//组织默认事件的绑定写法
+                }*/
+                document.addEventListener('contextmenu',function () {
+                    ev.preventDefault();
+                });
+                return false;//return false的组织默认事件有限
+            }
+        }
+    </script>
+</head>
+<body style="height:2000px;">
+<div id="div1"></div>
+</body>
+</html>
