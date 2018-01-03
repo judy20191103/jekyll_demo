@@ -34,3 +34,20 @@ window.event? window.event.cancelBubble = true : evt.stopPropagation();
 js阻止默认行为兼容
 
 window.event? window.event.returnValue = false : evt.preventDefault();
+/******************************************/
+function stopPreventionAndBubble(e){
+  var ev=e||event;
+  var target=ev.target||ev.srcElement;//ev.target是标准浏览器的做法，ev.srcElement是IE浏览器的做法
+  if(typeof ev.preventDefault==='function'){
+    ev.preventDefault();//标准浏览器阻止默认行为事件/
+    ev.stopPropagation();//标准浏览器阻止冒泡事件
+    }
+    else{
+      ev.returnValue=false;//IE阻止默认行为
+      ev.cancelBubble=true;//IE阻止冒泡事件
+      }
+    }
+
+
+
+
