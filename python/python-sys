@@ -1,0 +1,29 @@
+sys 模块提供了许多函数和变量来处理 Python 运行时环境的不同部分.
+处理命令行参数
+在解释器启动后, argv 列表包含了传递给脚本的所有参数, 列表的第一个元素为脚本自身的名称.
+使用sys模块获得脚本的参数
+复制代码 代码如下:
+
+print "script name is", sys.argv[0]        # 使用sys.argv[0]采集脚本名称
+if len(sys.argv) > 1:
+    print "there are", len(sys.argv)-1, "arguments:"  # 使用len(sys.argv)-1采集参数个数-1为减去[0]脚本名称
+    for arg in sys.argv[1:]:            #输出除了[0]外所有参数
+        print arg
+else:
+    print "there are no arguments!"
+
+如果是从标准输入读入脚本 (比如 "python < sys-argv-example-1.py"), 脚本的名称将被设置为空串.
+如果把脚本作为字符串传递给python (使用 -c 选项), 脚本名会被设置为 "-c".
+处理模块
+path 列表是一个由目录名构成的列表, Python 从中查找扩展模块( Python 源模块, 编译模块,或者二进制扩展).
+启动 Python 时,这个列表从根据内建规则, PYTHONPATH 环境变量的内容, 以及注册表( Windows 系统)等进行初始化.
+由于它只是一个普通的列表, 你可以在程序中对它进行操作,
+使用sys模块操作模块搜索路径:
+print "path has", len(sys.path), "members"
+sys.path.insert(0, "samples")  #将路径插入到path,[0]中
+import sample
+sys.path = []  #删除path中所有路径
+import random 
+
+使用sys模块查找内建模块
+builtin_module_names 列表包含 Python 解释器中所有内建模块的名称:
