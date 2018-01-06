@@ -1,0 +1,84 @@
+python os模块常用命令
+python编程时，经常和文件、目录打交道，这是就离不了os模块。os模块包含普遍的操作系统功能，与具体的平台无关。以下列举常用的命令
+
+1. os.name——判断现在正在实用的平台，Windows 返回 ‘nt'; Linux 返回’posix'
+
+2. os.getcwd()——得到当前工作的目录。
+
+3. os.listdir()——指定所有目录下所有的文件和目录名。例： 
+
+>>>inport os
+>>>os.listdir(".")
+['paper','Online','Data','Description&Goal.txt','Example.txt','Software']
+以列表的形式全部列举出来，其中没有区分目录和文件
+
+4. os.remove()——删除指定文件
+
+5. os.rmdir()——删除指定目录
+
+6. os.mkdir()——创建目录
+
+　　注意：这样只能建立一层，要想递归建立可用：os.makedirs()
+  
+7. os.path.isfile()——判断指定对象是否为文件。是返回True,否则False
+
+8. os.path.isdir()——判断指定对象是否为目录。是True,否则False。例：  
+>>>os.listdir(".")
+['paper','Online','Data','Description&Goal.txt','Example.txt','Software']
+>>>os.path.isdir("Data")
+True
+
+9 os.path.exists()--检验指定的对象是否存在，是true,否则False，例：
+os.path.exists("./Data")
+True
+
+10 os.path.split()--返回路径的目录和文件名。例：
+>>>os.path.split("/home/rte/del.sh")
+('/home/rts','')
+
+11 os.getcwd()--获得当前工作的目录（get current work dir)
+12 os.system()--执行shell命令，
+>>>os.system("echo 'hello world!'")
+hello word!
+
+13. os.chdir()——改变目录到指定目录
+
+14. os.path.getsize()——获得文件的大小，如果为目录，返回0
+
+15. os.path.abspath()——获得绝对路径。例：
+>>>import os
+>>>os.path.abspath(".")
+'/home/rte/SRL'
+
+16 os.path.join(path,name)--链接目录和文件名
+>>>os.path.join('/home/rte','del.sh')
+'/home/rte/del.sh'
+
+17.os.path.basename(path)——返回文件名
+>>>os.path.basename('/home/rte/shan')
+'shan'
+    
+18. os.path.dirname(path)——返回文件路径
+>>>os.path.dirname('/home/rte/shan')
+'/home/rte'
+
+19 example--获得程序所在的目录
+import os
+import sys
+if _name_=='_main_';
+    print os.path.realpath(sys.argv[0])
+    print os.path.split(os.path.realpath(sys.argv[0]))
+    print os.path.split(os.path.realpath(sys.argv[0]))[0]
+    
+ 执行结果：   
+/home/jihite/ftp/del.py
+('/home/jihite/ftp', 'del.py')
+/home/jihite/ftp　
+
+细节——os.path.spilit()把目录和文件区分开
+>>> import os
+>>> os.path.split("a/b/c/d")
+('a/b/c', 'd')
+>>> os.path.split("a/b/c/d/")
+('a/b/c/d', '')
+
