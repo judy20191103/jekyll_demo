@@ -1,0 +1,65 @@
+csv文件格式是一种通用的电子表格和数据库导入导出格式。最近我调用RPC处理服务器数据时，经常需要将数据做个存档便使用了这一方便的格式。
+
+简介：
+python csv模块封装了常用的功能，使用的简单例子如下：
+# 读取csv文件
+import csv
+with open('some.csv', 'rb') as f:        # 采用b的方式处理可以省去很多问题
+    reader = csv.reader(f)
+    for row in reader:
+        # do something with row, such as row[0],row[1]
+
+
+import csv
+with open('some.csv', 'wb') as f:      # 采用b的方式处理可以省去很多问题
+    writer = csv.writer(f)
+    writer.writerows(someiterable)
+    
+默认的情况下, 读和写使用逗号做分隔符(delimiter)，用双引号作为引用符(quotechar)，当遇到特殊情况是，可以根据需要手动指定字符, 例如:
+
+import csv
+with open('passwd', 'rb') as f:
+    reader = csv.reader(f, delimiter=':', quoting=csv.QUOTE_NONE)
+    for row in reader:
+        print row
+上述示例指定冒号作为分隔符，并且指定quote方式为不引用。这意味着读的时候都认为内容是不被默认引用符(")包围的。quoting的可选项为: QUOTE_ALL, QUOTE_MINIMAL, QUOTE_NONNUMERIC, QUOTE_NONE.
+
+有点需要注意的是，当用writer写数据时， None 会被写成空字符串，浮点类型会被调用 repr() 方法转化成字符串。所以非字符串类型的数据会被 str() 成字符串存储。所以当涉及到unicode字符串时，可以自己手动编码后存储或者使用csv提供的 UnicodeWriter, 具体可参见这里。
+
+字典方式地读写
+csv还提供了一种类似于字典方式的读写，方式如下:
+
+格式如下:
+
+class csv.DictReader(csvfile, fieldnames=None, restkey=None, restval=None, dialect='excel', *args, **kwds)
+
+class csv.DictWriter(csvfile, fieldnames, restval='', extrasaction='raise', dialect='excel', *args, **kwds)
+其中fieldnames指定字典的key值，如果reader里没有指定那么默认第一行的元素，在writer里一定要指定这个。
+
+使用示例
+
+# 读
+>>> import csv
+>>> with open('names.csv') as csvfile:
+...     reader = csv.DictReader(csvfile)
+...     for row in reader:
+...         print(row['first_name'], row['last_name'])
+...
+Baked Beans
+Lovely Spam
+Wonderful Spam
+
+
+# 写
+
+import csv
+with open('names.csv', 'w') as csvfile:
+    fieldnames = ['first_name', 'last_name']
+    writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+
+    writer.writeheader()
+    writer.writerow({'first_name': 'Baked', 'last_name': 'Beans'})
+    writer.writerow({'first_name': 'Lovely', 'last_name': 'Spam'})
+    writer.writerow({'first_name': 'Wonderful', 'last_name': 'Spam'})
+其它
+csv模块还涉及了其它的概念，比如 Dialects, 还提供了供错误处理的 exception csv.Error 等，因为实际使用较少及就不累赘在此。更多参考官方文档。
