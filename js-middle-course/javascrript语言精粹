@@ -1,0 +1,31 @@
+ var flight={
+        airline:"Oceanic",
+        number:116,
+        departure:{
+            IATA:"SYD",
+            time:"2017-1-16",
+            city:"xian"
+        },
+        arrival:{
+            IATA:"LAX",
+            time:"2017-1-19",
+            city:"beihai"
+        }
+    };
+    //尝试检索一个undefined值会报错，可以通过&&运算符来避免错误，&&有短路效应
+    alert(flight.equipment&&flight.equipment.model);//undefined
+    alert(flight.equipment.model);//Uncaught TypeError: Cannot read property 'model' of undefined
+    
+     var stooge={
+        "first-name":"Jerome",
+        "last-name":"Howard",//键名未字符串形式的时候访问时只能用[]形式
+        ruming:"huahua"//./[]都可以访问
+    };
+    stooge["first-name"]="shiying";
+    stooge.ruming="huajiao";
+    
+    所谓编程，就是将一组需求分解成一组函数与数据结构的功能。
+    
+    因为函数时对象，所以它们可以像任何其他的值一样被使用。函数可以存放在变量，对象和数组中。函数可以被当作参数传递给其他函数，函数
+    也可以再返回函数。而且因为函数时对象，所以函数可以拥有方法。
+    
