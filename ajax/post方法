@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        window.onload=function () {
+            var btn=document.getElementById("btn");
+            btn.onclick=function () {
+                var xmr=null;
+                try{
+                    xmr=new XMLHttpRequest();
+                }catch (e){
+                    xmr=new ActiveXObject("Microsoft.XMLHTTP");
+                }
+                xmr.open("post","post1.php",true);
+                //post方式，数据放在send()中传递
+                //申明发送的数据类型，post没有缓存问题，get的缓存问题需要加上一个时间戳，如果不设置setRequestHeader，则后台将接收不到数据
+                xmr.setRequestHeader("content-type","application/x-www-form-urlencoded");
+                xmr.send("username=shiying&age=24");
+                xmr.onreadystatechange=function () {
+                    if(xmr.readyState==4){
+                        if(xmr.status==200){
+                            alert(xmr.responseText);
+                        }
+                        else{
+                            alert("Err "+xmr.status);
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+<input type="button" value="按钮" id="btn"/>
+</body>
+</html>
+
+post是将后台提交数据，没有缓存问题，get是从后台获取数据，如果浏览器有缓存，就从浏览器的缓存中获取比较方便
+
+responeText：返回的是字符串形式
