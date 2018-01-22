@@ -1,0 +1,74 @@
+表单：数据大的提交
+action:数据提交的地址，默认是当前页面
+method:数据提交的方式，默认是gte方式
+1:get
+    把数据名称和数据值用=连接，如果有多个的话，那么它会用&把多个数据组合链接起来，
+    然后把数据放在url?后面传到指定页面
+2：post
+enctype:提交的数据格式，默认
+application/x-www-form-urlencoded
+
+php输出中文乱码问题，只要把php文件的保存格式的编码设置为utf-8,与前端页面的utf-8格式保持一致
+
+readyState:ajax的工作状态
+responseText:ajax请求返回的内容就被放到该属性下面
+onreadystatechange:当readyState改变的时候触发
+status:服务器状态，http状态码
+
+1:解决浏览器缓存的问题，在url？后面链接一个随机数，时间戳
+2:乱码传递 编码encodeURI
+
+
+readyState:
+ 0- 载入，还没有调用send()方法
+ 1- 载入，已经调用send()方法，正在发送请求
+ 2- 载入完成，send()方法执行完成，已经接收到全部响应内容
+ 3- 交互，郑子啊解析响应内容
+ 4- 完成，响应内容解析完成，可以在客户端调用了
+ 
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        window.onload=function () {
+            var btn=document.getElementById("btn");
+            btn.onclick=function () {
+                var xmr=null;
+                try{
+                    xmr=new XMLHttpRequest();
+                }catch(e){
+                    xmr=new ActiveXObject("Microsoft.XMLHTTP");
+                }
+                xmr.open("get","get1.php?username="+encodeURI("施颖")+"&age=24&"+new Date().getTime(),true);
+                xmr.send();
+                xmr.onreadystatechange=function () {
+                    if(xmr.readyState==4&&xmr.status==200){
+                        alert(xmr.responseText);
+                    }
+                    else{
+                        alert("Err "+xmr.status);// Err 200,Err 200, 你的名字：施颖，年龄24
+                        //也就是说因为readyState并未达到4，交互未完成导致返回两次Err
+                    }
+                }
+               /*  if(xmr.readyState==4){
+                     if(xmr.status==200){
+                         alert(xmr.responseText);
+                     }
+                     else{
+                         alert("出错了,Err "+xmr.status);
+                     }
+                 }
+                };
+*/
+            }
+        }
+    </script>
+</head>
+<body>
+<input type="button" value="按钮" id="btn"/>
+</body>
+</html>
+ 
+ 
