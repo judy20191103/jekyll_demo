@@ -1,0 +1,39 @@
+将wamp安装好之后，wamp下的wwww默认为localhost
+在www下新建文件夹，在浏览器中打开的文件路径为：loclahost/www/ajax/ajax1.html
+
+ajax请求txt文档出现的中文乱码问题
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        window.onload=function () {
+            var btn=document.getElementById("btn");
+            btn.onclick=function () {
+                var xmr=null;
+                try{
+                    xmr=new XMLHttpRequest();
+                }catch (e){
+                    xmr=new ActiveXObject("Microsoft.XMLHTTP");//ie6以下使用
+                }
+               xmr.open('get','../file2/3.txt',true);
+              // xmr.open("get","file/2.txt",true);
+              //第一步：设置读取txt要显示的编码格式
+                xmr.setRequestHeader('Content-type','application/x-www-form-urlencoded');
+                xmr.send();
+                xmr.onreadystatechange=function () {
+                    if(xmr.readyState==4&&xmr.status==200){
+                        alert(xmr.responseText);
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+<input type="button" value="按钮" id="btn"/>
+</body>
+</html>
+
+//第二部：设置需要读取的文本的编码方式，新建的文本文件默认为ANSI编码，更改为UTF-8编码
