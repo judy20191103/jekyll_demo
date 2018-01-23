@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body{
+            margin:0;
+        }
+        #ul1{
+            width:1080px;
+            margin:100px auto 0;
+        }
+        li{
+            width:247px;
+            list-style:none;
+            float:left;
+            margin-right:10px;
+        }
+        #ul1 div{
+            border:1px solid #000;
+            padding:10px;
+            margin-bottom:10px;
+        }
+        #ul1 img{
+            width:225px;
+            display:block;
+        }
+    </style>
+    <script src="ajax.js"></script>
+    <script>
+        window.onload=function () {
+            var oUl=document.getElementById("ul1");
+            var aLi=oUl.getElementsByTagName("li");
+            var iLen=aLi.length;//4
+            var iPage=1;//从第一页开始加载
+            var flag=true;//充当开关，flag=true时说明可以继续加载下一页的图片，以免上一页的图片未完全显示时就就加载过来造成某一列图片过长
+            getList();
+            //初始化加载数据
+            function getList() {
+                ajax('get','getPics.php','cpage='+iPage,function (phpdata) {
+                    var data=JSON.parse(phpdata);
+                    if(!data){
+                        //后续没有数据直接返回
+                        return;
+                    }
+                    for(var i=0;i<data.length;i++){
+                        //获取高度最短的li
+                        var _index=getShort();
+                        var oDiv=document.createElement("div");
+                        var oImg=document.createElement("img");
+                        oImg.src=data[i].preview;
+                        oImg.style.width='225px';
+                        oImg.style.height=data[i].height*(225/data[i].width)+'px';//讲图片按照比例缩放
+                        oDiv.appendChild(oImg);
+                        var op=document.createElement('p');
+                        op.innerHTML=data[i].title;
+                        oDiv.appendChild(op);
+                        aLi[_index].appendChild(oDiv);
+                    }
+                    flag=true;
+                });
+            }
+            window.onscroll=function () {
+                var _index=getShort();
+                var currentLi=aLi[_index];
+                //如果当前最短列不在可视区内，则可以加载另一页图片，最短列的当前img.offsetHeight(padding,content,border)+
+                var scrollTop=document.documentElement.scrollTop||document.body.scrollTop;
+                if(getTop(currentLi)+currentLi.offsetHeight<document.documentElement.clientHeight+scrollTop){
+                 if(flag){
+                     flag=false;
+                     iPage++;
+                     getList();
+                   }
+                }
+            };
+            function getShort() {
+                var index=0;
+                var currentHeight=aLi[index].offsetHeight;
+                for(var i=0;i<iLen;i++){
+                    if(aLi[i].offsetHeight<currentHeight){
+                        index=i;
+                        currentHeight=aLi[i].offsetHeight;
+                    }
+                }
+                return index;
+            }
+            function getTop(obj) {
+                var currentTop=0;
+                while(obj){
+                    currentTop+=obj.offsetTop;
+                    //要知道某个元素在页面上的偏移量，将这个元素的offsetLeft和offsetTop与其offsetParent
+                    //的相同属性相加，并加上offsetParent的相应方向的边框，如此循环知道根元素，就可以得到元素到页面的偏移量
+                    obj=obj.offsetParent;//null，截止
+                }
+                //alert(obj);null
+                return currentTop;
+            }
+        }
+    </script>
+</head>
+<body>
+<ul id="ul1">
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+</ul>
+</body>
+</html>
