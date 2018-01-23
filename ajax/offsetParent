@@ -1,0 +1,32 @@
+定位父级offsetParent的定义是:与当前元素最近的经过定位（positon!=static)的父级元素，主要分为以下几种情况
+【1】元素自身有fixed固定定位时，fixed定位的元素是相对于可视区进行定位，此时没有定位父级，offsetParent的结果为null;
+[注意]firefox浏览器有兼容性问题
+/firefox并没有考虑固定定位的问题，返回<body>，其他浏览器都返回null
+
+【2】元素自身无fixed定位，且父级元素都未经过定位，offsetParent的结果为<body>
+【3】元素自身无fixed定位，且父级元素存在经过定位的元素，offsetParent的结果为离自身元素最近的经过定位的父级元素
+【4】<body>元素的parentNode是null
+
+offsetWidth表示元素在水平方向上占用的空间大小，无单位(以像素px计)
+offsetHeight表示元素在垂直方向上占用的空间大小，无单位(以像素px计)
+[注意]如果存在垂直滚动条，offsetWidth也包括垂直滚动条的宽度；如果存在水平滚动条，offsetHeight也包括水平滚动条的高度
+offsetTop表示元素的上外边框至offsetParent元素的上内边框之间的像素距离
+offsetLeft表示元素的左外边框至offsetParent元素的左内边框之间的像素距离
+
+要知道某个元素在页面上的偏移量，将这个元素的offsetLeft和offsetTop与其offsetParent的相同属性相加，
+并加上offsetParent的相应方向的边框，如此循环直到根元素，就可以得到元素到页面的偏移量
+[注意]在默认情况下，IE8-浏览器下如果使用currentStyle()方法获取<html>和<body>(甚至普通div元素)
+的边框宽度都是medium，而如果使用clientLeft(或clientTop)获取边框宽度，则是实际的数值
+
+注意事项:
+【1】所有偏移量属性是只读的
+【2】 如果给元素设置了display:none,则它的偏移量属性都是0
+【3】每次访问偏移量属性都要重新计算
+
+console.time("time"); 这两个方法中都可以传入一个参数，作为计时器的名称，它的作用是子啊代码运行时分清楚各个计时器。对console.timeEnd的
+调用会立即输出总共消耗的时间，单位是毫秒
+console.time("time");//启动计时器
+//写一些测试代码
+console.timeEnd("time");
+
+ 
