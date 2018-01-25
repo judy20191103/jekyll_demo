@@ -1,0 +1,86 @@
+jsonp:json with padding
+1：script标签
+2:用script去加载资源是诶有跨域问题的
+
+在资源加载进来之前定义好一个函数，这个函数接收一个参数（数据），函数里面利用这个参数去做一些事情
+然后需要的时候通过script标签加载对应远程文件资源，当远程文件资源被加载进来的时候，就会去执行我们事前
+定义好的函数，并且把数据当作这个函数的参数传入进去
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        function fn1(data) {
+            var ul1=document.getElementById("ul1");
+            var html="";
+            for(var i=0;i<data.length;i++){
+                html+='<li>'+data[i]+'</li>'
+            }
+            ul1.innerHTML=html;
+        }
+        function fn2(data) {
+            var ul2=document.getElementById("ul2");
+            var html="";
+            for(var i=0;i<data.length;i++){
+                html+='<li>'+data[i]+'</li>'
+            }
+            ul2.innerHTML=html;
+        }
+        function fn3(data) {
+            var ul3=document.getElementById("ul3");
+            var html="";
+            for(var i=0;i<data.length;i++){
+                html+='<li>'+data[i]+'</li>'
+            }
+            ul3.innerHTML=html;
+        }
+    </script>
+    <script>
+        window.onload=function () {
+           // var btns=document.getElementsByTagName("input");
+            var btns=document.querySelectorAll("input");
+            btns[0].onclick=function () {
+                var oScript=document.createElement("script");
+                oScript.src="getData.php?callback=fn1";
+                document.body.appendChild(oScript);
+            };
+            btns[1].onclick=function () {
+                var oScript=document.createElement("script");
+                oScript.src="getData.php?t=str&callback=fn2";
+                document.body.appendChild(oScript);
+            };
+            btns[2].onclick=function () {
+                var oScript=document.createElement("script");
+                oScript.src="getData.php?callback=fn3";
+                document.body.appendChild(oScript);
+            }
+        }
+    </script>
+</head>
+<body>
+<input type="button" id="btn1" value="加载数字"/>
+<ul id="ul1"></ul>
+<input type="button" id="btn2" value="加载字母"/>
+<ul id="ul2"></ul>
+<input type="button" id="btn3" value="加载数字"/>
+<ul id="ul3"></ul>
+
+</body>
+</html>
+
+
+<?php
+$t = isset($_GET['t']) ? $_GET['t'] : 'num';
+$callback = isset($_GET['callback']) ? $_GET['callback'] : 'fn1';
+
+$arr1 = array('111111','22222222','33333333','4444444','555555555555555555555');
+$arr2 = array('aaaaaaaaaaaa','bbbbbbbb','cccccccccccc','ddddddddd','eeeeeeeeeeee');
+
+if ($t == 'num') {
+	$data = json_encode($arr1);
+} else {
+	$data = json_encode($arr2);
+}
+echo $callback.'('.$data.');';
