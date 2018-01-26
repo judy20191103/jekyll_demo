@@ -1,0 +1,70 @@
+jQuery设计思想？
+1:选择网页元素
+--模拟CSS选择元素
+--独有表达式选择
+--多种筛选方法
+2:JQ写法
+--方法函数化
+--链式操作
+--取值赋值合体
+3：JQ与JS关系
+可以共存，不能混用
+
+注意jQuery版本对不同的浏览器的支持
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #div1 div{
+            width:200px;
+            height:200px;
+            border:1px solid red;
+            display:none;
+        }
+        .active{
+            background: red;
+        }
+    </style>
+    <script src="jquery-3.2.1.min.js"></script>
+    <script>
+       /* window.onload=function () {
+            var oDiv=document.getElementById("div1");
+            var inputs=oDiv.getElementsByTagName("input");
+            var divs=oDiv.getElementsByTagName("div");
+            for(var i=0;i<inputs.length;i++){
+                inputs[i].index=i;
+                inputs[i].onclick=function () {
+                    for(var i=0;i<divs.length;i++){
+                        inputs[i].className="";
+                        divs[i].style.display="none";
+                    }
+                    this.className="active";
+                    divs[this.index].style.display="block";
+                }
+            }
+        }*/
+        //从原生js逐步对应写成jQuery形式
+       $(function () {
+           $("#div1").find("input").click(function () {
+               $("#div1").find("input").attr("class","");
+               $("#div1").find("div").css("display","none");
+               $(this).attr("class","active");
+               $("#div1").find("div").eq($(this).index()).css("display","block");
+           })
+       })
+    </script>
+</head>
+<body>
+<div id="div1">
+    <input class="active" type="button" value="1"/>
+    <input type="button" value="2"/>
+    <input type="button" value="3"/>
+    <div style="display:block;">11111</div>
+    <div>222222</div>
+    <div>333333</div>
+</div>
+</body>
+</html>
