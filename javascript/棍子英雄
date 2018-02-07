@@ -1,0 +1,180 @@
+1：当棍子的长度落在右边块的左侧和右侧之间，绝色向前进，游戏继续
+2:当棍子的长度没有到达右边块的左侧，让角色向前走，走到棍子的末端的时候掉下，游戏结束
+3：当棍子的长度超出右边块，让角色往前走，超过范围，角色掉下，游戏结束；
+
+思路：写代码的过程就是根据游戏的操作流程来写，先写好大致的游戏布局。
+1：点击鼠标，棍子增长，
+2:当鼠标松开后，棍子向下旋转90度，角色沿着棍子进行移动，与此同时生成rightdiv
+然后根据棍子的长度进行判断
+3:当棍子顺时针旋转90deg之后，如果onoff=true(表示棍子旋转90deg后，它的长度范围在合理的范围之内）
+那么，角色就可以改变其left值
+4:当角色移动结束后，画布则向左移动middlediv.left值
+5:当画布切换完之后，将画布，棍子，角色的值置为初始状态，
+设置 leftdiv.style.width=middlediv.offsetWidth
+
+注意设置标识结合判断条件来进行判断：
+onoff：表示棍子的长度是否在合理的范围内，游戏能否继续进行
+isPlaying:表示当前是否有动画正在进行，如果有 return;让鼠标点击页面无反应
+num：计算棍子的长度
+step:用来保证角色移动完成才能继续画布的操作，否则transitionend会立即触发画布的操作
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #wrap{
+            width:300px;
+            height:500px;
+            border:1px solid #000;
+            margin:70px auto;
+          /*  overflow: hidden;*/
+        }
+        #gameContent{
+            width:600px;
+            height:500px;
+            background:yellow;
+            position:relative;
+            left:0;
+        }
+        #leftdiv{
+            width:80px;
+            height:200px;
+            background:black;
+            position:absolute;
+            bottom:0;
+        }
+        #hero{
+            width:40px;
+            height:40px;
+            background:red;
+            position:absolute;
+            left:0;
+            bottom:200px;
+        }
+        #middlediv{
+            width:80px;
+            height:200px;
+            background:black;
+            position: absolute;
+            bottom:0;
+            left:200px;
+        }
+        #rightdiv{
+            width:80px;
+            height:200px;
+            background:black;
+            position:absolute;
+            bottom:0;
+            left:400px;
+        }
+        #stick{
+            width:0;
+            height:6px;
+            background:green;
+            position:absolute;
+            left:40px;
+            bottom:200px;
+            transform:rotate(-90deg);
+            transform-origin:0 6px;
+        }
+    </style>
+</head>
+<body>
+<div id="wrap">
+    <div id="gameContent">
+        <div id="leftdiv"></div>
+        <div id="middlediv"></div>
+        <div id="rightdiv"></div>
+        <div id="hero"></div>
+        <div id="stick"></div>
+    </div>
+</div>
+<script>
+    var timer=null;
+    var onoff=true;
+    var isPlaying=false;//如果当前有动画，则按下鼠标的时候没有任何反应
+    var num=0;//用来计算棍子的高度
+    var step=0;//用step来保证必须完成hero的移动的时候才能继续触发gameContent的transition
+    var gameContent=document.getElementById("gameContent");
+    var stick=document.getElementById("stick");
+    var middlediv=document.getElementById("middlediv");
+    var leftdiv=document.getElementById("leftdiv");
+    var rightdiv=document.getElementById("rightdiv");
+    var hero=document.getElementById("hero");
+
+    middlediv.style.width=createNum(40,80)+'px';//每次页面看到的第二根柱子的位置，宽度都是随机的
+    middlediv.style.left=createNum(100,220)+'px';
+    //1 鼠标按下的时候棍子变长
+    document.onmousedown=function () {
+        if(isPlaying){
+            return ;
+        }
+        timer=setInterval(function () {
+            num+=2;
+            stick.style.width=num+'px';
+        },20);
+    };
+    document.onmouseup=function () {
+        if(isPlaying){
+            return ;//当鼠标抬起的时候有动画在进行
+        }
+        clearInterval(timer);
+        middleLeft = middlediv.offsetLeft;
+        isPlaying=true;
+        next=createNext();
+        rightdiv.style.width=next[1]+'px';
+        rightdiv.style.left=next[0]+'px';
+
+        stick.style.transition="0.5s";
+        stick.style.transform="rotate(0deg)";
+
+        if(num<middlediv.offsetLeft-hero.offsetWidth||num>middlediv.offsetLeft+middlediv.offsetWidth-hero.offsetWidth){
+            console.log("失败");
+            onoff=false;
+        }
+    };
+    stick.addEventListener("transitionend",function () {
+        if(onoff){
+            hero.style.transition="1s";
+            hero.style.left=middlediv.offsetLeft+'px';
+        }
+    });
+    hero.addEventListener("transitionend",function (ev) {
+        gameContent.style.transition="1s";
+        gameContent.style.left=-middlediv.offsetLeft+'px';
+        step=1;//如果不设置step，那么当gameContent的transxitionend会立即触发
+        ev.stopPropagation();//hero是gameContent的子级，transition会向上冒泡
+    });
+    gameContent.addEventListener("transitionend",function () {
+        if(step==1){
+            gameContent.style.transition="none";
+            gameContent.style.left=0;
+            hero.style.transition="none";
+            hero.style.left=0;
+            stick.style.transition="none";
+            stick.style.width=0;
+            stick.style.transform="rotate(-90deg)";
+
+            leftdiv.style.width=middlediv.offsetWidth+'px';
+            middlediv.style.left=next[0]-middleLeft+"px";
+            middlediv.style.width=next[1]+'px';
+
+            isPlaying=false;
+            num=0;
+            step=0;
+           // alert(1);
+        }
+    });
+    function createNum(start,end) {
+        return parseInt(Math.random()*(end-start)+start);
+    }
+    function createNext() {
+        var iWidth=createNum(40,80);
+        //300+middleLeft-80=220+middleLeft
+        var iLeft=createNum(300,220+middleLeft);
+        return [iLeft,iWidth];
+    }
+</script>
+</body>
+</html>
