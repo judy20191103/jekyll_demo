@@ -1,0 +1,26 @@
+给js代码打断点，刷新，然后可以用步进步出断续等查看代码流程和相应的输出值，方便debuger
+
+断续：从这一次的断点到下一次的断点
+
+DOM可以显示节点的相关信息
+
+console.warn();
+console.error();
+console.group();
+....
+console.groupend();
+
+console.dir(cat);显示所有信息
+
+console.dirxml(odiv)；显示当前元素的所有结构
+
+var a=10;
+console.assert(a);断言
+
+console.trace();记录程序执行流程
+
+console.time(time1）；
+....执行代码
+console.timeend(time1);//输出该代码的执行时间，分析性能优劣
+
+可以在其他浏览器中导入firebug的链接，然后用firebug进行调试
