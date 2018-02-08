@@ -1,0 +1,17 @@
+event对象，事件源：不管在哪个事件中，只要是当前操作的那个元素就是事件源
+ie:window.event.srcElement 标准下:event.target
+nodeName:找到元素的标签名 ul ,li,大写的形式
+1:提高性能 
+2:新添加的元素还可以继承事件
+oul.onmouseover=function(ev){
+ var ev=ev||window.event;
+ var target=ev.target||ev,srcElement;
+ if(target.nodeName.toLowerCase()="ul"){
+   target.style.background="red";
+   }
+ }
+ oul.onmouseout=function(ev){
+ var ev=ev||window.event;
+ var target=ev.target||ev,srcElement;
+   target.style.background="";
+ }
