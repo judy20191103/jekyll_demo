@@ -1,0 +1,42 @@
+对象（arr,object)和函数都是引用类型，在内存中指向的都是同一个东西
+var a=[1,2,3];
+var b=a;
+b=[1,2,3,4];此时b和a分离，b指向了另一个对象
+
+var obj={
+a:10
+};
+var obj2=obj;
+obj2.a=20;
+alert(obj.a);//20
+
+copy对象函数
+function copy(obj){//浅拷贝
+   var newObj={}；
+   for(var attr in obj){
+   newObj[attr]=obj[attr];
+   }
+   return newObj;
+   }
+   
+   递归其对象的属性（对象的属性值也可能是一个对象，不能直接赋值，还需要再遍历递归
+   函数调用函数自身；最后一次判断一个种植体哦啊见，可以执行归的动作
+   function test(n){
+      if(n==1){
+       return 1;//归
+       }
+      return n*test(n-1);//递
+   }
+   
+   function deepCopy(obj){
+      if(typeof obj!=‘object’){
+      console.trace();//打印其步骤
+      return obj;
+    }
+    var newObj={};
+    for(var attr in obj){
+      newObj[attr]=deepCopy(obj[attr]);//复制n多层
+    }
+      return newObj;
+    }
+   
