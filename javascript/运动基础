@@ -1,0 +1,171 @@
+运动基础
+让Div运动起来
+速度——物体运动的快慢
+
+匀速运动
+速度不变
+
+运动框架
+在开始运动时，关闭已有定时器
+检测停止条件和执行运动对立(if/else)
+运动框架实例
+例子1：“分享到”侧边栏
+例子2：淡入淡出的图片
+支持不同属性，能让某个值运动起来
+用currentStyle代替offset
+
+多个物体同时运动
+例子：多个Div，鼠标移入变宽
+单定时器，存在问题
+每个Div一个定时器
+
+多个值同时运动
+for in 的应用
+
+运动回调 - 链式运动
+摩擦运动
+逐渐变慢，最后停止
+
+缓冲运动
+与摩擦力的区别:可以精确的停到指定目标点
+距离越远速度越大
+速度由距离决定
+速度=(目标值-当前值)/缩放系数
+Bug：速度取整
+值取整
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #div1 {width:100px; height: 100px; background: red; position: absolute;top: 30px; left: 400px;opacity: 0.3;}
+    </style>
+    <script>
+        window.onload=function () {
+            var oDiv1=document.getElementById("div1");
+            oDiv1.onclick = function() {
+                startMove(this, {
+                    width : 200,
+                    height: 300,
+                    opacity:0.8
+                }, 10);
+            };
+            function startMove(obj,json,speed) {
+                clearInterval(obj.timer);
+                var currentVal=0;
+                obj.timer=setInterval(function () {
+                    var onoff=true;
+                    for(var attr in json){
+                        var target=json[attr];
+                        if(attr=='opacity'){
+                            currentVal=Math.round(css(obj,'opacity')*100);
+                        }
+                        else{
+                            currentVal=parseInt(css(obj,attr));
+                        }
+                        //上一份代码是currentVal==target，clearInterval(obj.timer),问题就是出在这里
+                        //一旦有属性值到达目标点就关掉定时器会导致其他的属性没办法运动到目标点，取得是木桶短板
+                        //而这里改成只要还有属性没运动到目标点，就不能关掉定时器，给了最为宽松得木桶长板
+                        if(currentVal!=target){
+                            onoff=false;
+                            if(attr=='opacity'){
+                                obj.style.opacity=(currentVal+speed)/100;
+                                console.log(obj.style.opacity);
+                                obj.style.filter="alpha(opacity="+(currentVal+speed)+")";
+                            }
+                            else{
+                                obj.style[attr]=currentVal+speed+'px';
+                            }
+                        }
+                    }
+                    if(onoff){
+                        //onoff=true，表示所有的属性都运动到了目标点
+                        clearInterval(obj.timer);
+                    }
+                },30);
+            }
+            function css(obj,attr) {
+                if(obj.currentStyle){
+                    return obj.currentStyle[attr];
+                }
+                else{
+                    return getComputedStyle(obj,false)[attr];
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+<div id="div1"></div>
+</body>
+</html>
+/*********************************/
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #div1{
+            width:100px; height: 100px; background: red; position: absolute; top: 30px; left: 400px;
+        }
+    </style>
+    <script>
+        window.onload=function () {
+            var oDiv1 = document.getElementById('div1');
+            oDiv1.onclick=function () {
+                startMove(this, {
+                    width : 200,
+                    height : 200
+                });
+            };
+            function startMove(obj,json,fn) {
+                clearInterval(obj.timer);
+                var currentVal=0;
+                var speed=0;
+                obj.timer=setInterval(function () {
+                    var onoff=true;
+                    for(var attr in json){
+                        var target=json[attr];
+                        if(attr=='opacity'){
+                            currentVal=Math.round(css(obj,"opacity")*100);
+                        }
+                        else{
+                            currentVal=parseInt(css(obj,attr));
+                        }
+                        speed=(target-currentVal)/8;
+                        speed=speed>0?Math.ceil(speed):Math.floor(speed);
+                        if(currentVal!=target){
+                            onoff=false;
+                            if(attr=="opacity"){
+                                obj.style.opacity=(currentVal+speed)/100;
+                                obj.style.filter="alpha(opacity="+(currentVal+speed)+")";
+                            }
+                            else{
+                                obj.style[attr]=currentVal+speed+"px";
+                            }
+                        }
+                    }
+                    if(onoff){
+                        clearInterval(obj.timer);
+                        fn&&fn.call(obj);
+                    }
+                },30)
+            }
+            function css(obj,attr) {
+                if(obj.currentStyle){
+                    return obj.currentStyle[attr];
+                }
+                else{
+                    return getComputedStyle(obj,false)[attr];
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+<div id="div1"></div>
+</body>
+</html>
