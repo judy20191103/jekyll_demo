@@ -1,0 +1,224 @@
+弹性运动(1)
+加减速运动
+速度不断增加或减少
+速度减小到负值，会向反方向运动
+
+弹性运动
+在目标点左边，加速；在目标点右边，减速
+根据距离，计算加速度
+
+带摩擦力的弹性运动
+弹性运动+摩擦力
+弹性运动(2)
+弹性公式
+速度+=(目标值-初始值)/5
+速度*=0.7
+终止条件
+距离足够近 并且 速度足够小
+例子
+仿官网导航条效果
+
+弹性菜单
+弹性运动的问题：运动过界
+
+碰撞运动
+碰撞运动
+撞到目标点，速度反转
+无重力的漂浮Div
+速度反转
+滚动条闪烁的问题
+过界后直接拉回来
+加入重力
+反转速度的同时，减小速度
+纵向碰撞，横向速度也减小
+横向速度小数问题（负数）
+
+弹性:
+
+速度 += (目标点 - 当前值)/系数;  //6 , 7 , 8
+速度 *= 摩擦系数;   // 0.7 0.75
+
+缓冲:
+
+var 速度 = (目标点 - 当前值)/系数;
+速度取整
+
+/**
+ * Created by shiying on 2018-02-09.
+ */
+function startMove(obj, json, fn) {
+    clearInterval(obj.iTimer);
+    var iCur = 0;
+    var iSpeed = 0;
+
+    obj.iTimer = setInterval(function() {
+
+        var iBtn = true;
+
+        for ( var attr in json ) {
+
+            var iTarget = json[attr];
+
+            if (attr == 'opacity') {
+                iCur = Math.round(css( obj, 'opacity' ) * 100);
+            } else {
+                iCur = parseInt(css(obj, attr));
+            }
+
+            iSpeed = ( iTarget - iCur ) / 8;
+            iSpeed = iSpeed > 0 ? Math.ceil(iSpeed) : Math.floor(iSpeed);
+
+            if (iCur != iTarget) {
+                iBtn = false;
+                if (attr == 'opacity') {
+                    obj.style.opacity = (iCur + iSpeed) / 100;
+                    obj.style.filter = 'alpha(opacity='+ (iCur + iSpeed) +')';
+                } else {
+                    obj.style[attr] = iCur + iSpeed + 'px';
+                }
+            }
+
+        }
+
+        if (iBtn) {
+            clearInterval(obj.iTimer);
+            fn && fn.call(obj);
+        }
+
+    }, 30);
+}
+
+function css(obj, attr) {
+    if (obj.currentStyle) {
+        return obj.currentStyle[attr];
+    } else {
+        return getComputedStyle(obj, false)[attr];
+    }
+}
+/**************************************************************/
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #div1{ width:100px; height:100px; background:red; position:absolute;}
+    </style>
+   <script>
+       window.onload=function () {
+           var oInput = document.getElementById('input1');
+           var oDiv = document.getElementById('div1');
+           var timer = null;
+           var iSpeed = 0;
+           oInput.onclick=function () {
+               startMove();
+           };
+           function startMove() {
+               clearInterval(timer);
+               timer=setInterval(function () {
+                   iSpeed+=3;
+                   var T=oDiv.offsetTop+iSpeed;
+                   if(T>document.documentElement.clientHeight-oDiv.offsetHeight){
+                       T=document.documentElement.clientHeight-oDiv.offsetHeight;
+                       iSpeed*=-1;
+                       iSpeed*=0.75;
+                   }
+                   oDiv.style.top=T+"px";
+               },30);
+           }
+       }
+   </script>
+</head>
+<body>
+<input type="button" value="开始运动" id="input1">
+<div id="div1"></div>
+</body>
+</body>
+</html>
+
+/*********************************************/
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #div1{ width:100px; height:100px; background:red; position:absolute;}
+    </style>
+    <script>
+        window.onload=function () {
+            var oDiv = document.getElementById('div1');
+
+            var iSpeedX = 0;
+            var iSpeedY = 0;
+            var timer = null;
+
+            var disX = 0;
+            var disY = 0;
+            var prevX = 0;
+            var prevY = 0;
+            oDiv.onmousedown=function (ev) {
+                var ev = ev || window.event;
+                disX = ev.clientX - oDiv.offsetLeft;
+                disY = ev.clientY - oDiv.offsetTop;
+                prevX = ev.clientX;
+                prevY = ev.clientY;
+               document.onmousemove=function (ev) {
+                   var ev=ev||window.event;
+                   oDiv.style.left=ev.clientX-disX+"px";
+                   oDiv.style.top=ev.clientY-disY+"px";
+                   //用相邻两次鼠标移动的距离当作x/y的速度
+                   iSpeedX=ev.clientX-prevX;
+                   iSpeedY=ev.clientY-prevY;
+                   prevX=ev.clientX;
+                   prevY=ev.clientY;
+               };
+               document.onmouseup=function () {
+                   document.onmousemove=null;
+                   document.onmouseup=null;
+                   startMove();
+               };
+               return false;
+            };
+            function startMove() {
+                clearInterval(timer);
+                timer=setInterval(function () {
+                    iSpeedY+=3;
+                    var L = oDiv.offsetLeft + iSpeedX;
+                    var T = oDiv.offsetTop + iSpeedY;
+                    if(T>document.documentElement.clientHeight - oDiv.offsetHeight){
+                        T = document.documentElement.clientHeight - oDiv.offsetHeight;
+                        iSpeedY *= -1;
+                        iSpeedY *= 0.75;
+                        iSpeedX *= 0.75;
+                    }
+                    else if(T<0){
+                        T = 0;
+                        iSpeedY *= -1;
+                        iSpeedY *= 0.75;
+                    }
+                    if(L>document.documentElement.clientWidth - oDiv.offsetWidth){
+                        L = document.documentElement.clientWidth - oDiv.offsetWidth;
+                        iSpeedX *= -1;
+                        iSpeedX *= 0.75;
+                    }
+                    else if(L<0){
+                        L = 0;
+                        iSpeedX *= -1;
+                        iSpeedX *= 0.75;
+                    }
+                    oDiv.style.left = L + 'px';
+                    oDiv.style.top = T + 'px';
+
+                },30)
+            }
+        }
+    </script>
+</head>
+<body>
+<div id="div1"></div>
+</body>
+</html>
+
+
+
