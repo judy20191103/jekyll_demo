@@ -1,0 +1,26 @@
+Repaint--屏幕的一部分要重画，比如某个CSS的背景颜色变了，但是元素的几何尺寸没有变
+Reflow--意味着元件的几何尺寸变了，我们需要重新验证并计算Render Tree,是Render Tree的一部分或全部
+发生了变化。这就是Reflow,或者layout.
+HTML使用的是flow based layout,也就是流式布局，所以，如果某元件的几何尺寸发生了变化，需要重新布局
+也就是reflow。 reflow会从<html>这个root frame开始递归往下。依次计算所有的节点几何尺寸和位置。
+在reflow过程中，可能会增加一些 frame, 比如一些文本字符串必须要包裹起来
+
+repaint（重绘）和reflow(渲染）
+reflow的成本比repaint的成本高的多得多。DOM tree里的每个节点都会有reflow方法，一个节点的reflow很有可能
+导致子节点，甚至父节点以及同级节点的reflow。在一些高性能的电脑上也许还没有什么，但是如果reflow发生在手机上，
+那么这个过程是非常痛苦和耗电的。
+所以下面的动作很大可能是成本比较高的。
+1：当你增加，删除，修改DOM时，会导致reflow和repaint
+2: 当你移动DOM的位置时，或是搞个动画的时候
+3：当你修改CSS样式的时候
+4：当你resize窗口的时候
+5：当你修改网页的默认字体时
+display:none会触发reflow,visibility:hidden只会触发repaint，因为没有发生位置变化
+
+一般来说，浏览器会把这样的操作积攒一批，然后做一次reflow，这又叫异步reflow或增量异步reflow。
+但是有些情况浏览器时不会做的，比如：resize窗口，改变网页默认字体，对于这些操作，浏览器会立马执行
+但是有些时候，哦我们的脚本会阻止浏览器这么干，比如，请求下面的DOM值
+1: offsetTop,offsetLeft, offsetWidth,offsetHeight
+2:scrollTop/left/width/height
+3: clientTop/left/width/height/
+4: Ie中的getComputedStyle()或者currentStyle
