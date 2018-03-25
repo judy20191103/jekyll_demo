@@ -10,6 +10,16 @@
 解析和渲染流程
 Loading->parsing->rending->layout->painting
 
+浏览器的加载顺序
+navigationStart: 在导航开始的时候，在浏览器开始卸载前一页（如果有这样页面的时候），或者在开始提取页面的时候，捕获所需的数据。它将
+包含unloadEventStart数据或fetchStart数据。要想跟踪端到端的时间，可以使用这个指开始。
+unloadEventStart/ unloadEventEnd: 在浏览器开始卸载前一页或者已经完成前一页卸载的时候，捕获
+所需的数据（如果有相同域中前一页需要卸载的话
+domainLookupStart/domainLookupEnd: 在浏览器开始和完成请求内容的DNS查找时，捕获所需的数据。
+redirectStart/redirectEnd: 在浏览器开始和完成建立当前页面的远程服务器TCP连接时所捕获
+的数据。
+ 
+
 浏览器呈现网页的处理流程图
 Parsing HTML to construct the DOM tree -> Rending tree construction -> Layout of the render tree- >Painting the render tree
 
@@ -17,9 +27,8 @@ Parsing HTML to construct the DOM tree -> Rending tree construction -> Layout of
 2: Gecko(Firefox): 在解析HTML文档的同时，渲染引擎会把文档内的样式和外部CSS文件解析成CSS规则树
 而Webkit 不会生成CSS规则树
 3: 渲染器是在文档内解析和创建DOM节点后创建的，会计算DOM节点的样式信息。如果元素的display属性被设置成了none,或者如果元素的子孙
-继承了display:none,该元素的渲染器被创建。节点的子类和display属性一起决定了什么样的渲染器，渲染器是渲染树的节点。
-Gecko(Firefox):DOM树和CSS规则树结合之后，形成了Style Content Tree.
-将Style Content Tree 和渲染树关联，就完成了渲染树
+继承了display:none,该元素的渲染器不会被创建。节点的子类和display属性一起决定了什么样的渲染器，渲染器是渲染树的节点。
+Gecko(Firefox):DOM树和CSS规则树结合之后，形成了Style Content Tree.将Style Content Tree 和渲染树关联，就完成了渲染树
 渲染树包含了多个视觉信息（如颜色和尺寸等）矩形，这些矩形的排列顺序是在屏幕上显示的顺序。
 4: 渲染树构建出来之后，就进入布局阶段，为渲染树的每个节点分配一个屏幕上的确切坐标
 5: 最后一部，就是遍历渲染树，通过用户界面后端（UI Backend)将每个节点绘制出来
